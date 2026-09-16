@@ -1745,6 +1745,13 @@ button:active{
 
 
 /* =========================================================
+   AUTO-SAVE / EXAM PROTECTION
+   ========================================================= */
+.save-status{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:7px 11px;color:#067647;background:#ecfdf3;border:1px solid #bbf7d0;border-radius:20px;font-size:12px;font-weight:800}
+.resume-box{margin:18px 0;padding:15px;text-align:left;color:#075985;background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;line-height:1.6}
+.resume-box b{color:#0c4a6e}
+
+/* =========================================================
    MOBILE
    ========================================================= */
 
@@ -2139,7 +2146,9 @@ button:active{
     </div>
 
 
-    <div class="progress">
+    <div id="saveStatus" class="save-status">💾 Auto-Save Ready / स्वतः सेव सक्रिय</div>
+
+<div class="progress">
 
         <div
             id="bar"
@@ -3135,6 +3144,10 @@ let startedAt = null;
 
 let submitted = false;
 
+const EXAM_STORAGE_KEY = "NDSA_EXCEL_CRASH_EXAM_V2";
+const EXAM_DURATION = 75 * 60;
+let lastSavedSignature = "";
+
 
 /* =====================================================
    START EXAM
@@ -3142,91 +3155,176 @@ let submitted = false;
 
 function startExam(){
 
-    if(submitted)
-        return;
+    if(submitted) return;
 
+    const existing = loadSavedExam();
 
-    student =
-        document
-        .getElementById("studentName")
-        .value
-        .trim();
+    if(existing && existing.student && existing.studentId && !existing.submitted){
+        if(confirm(
+            "A saved exam session was found for " + existing.student +
+            " (" + existing.studentId + ").\n\n" +
+            "Do you want to RESUME the previous exam?\n\n" +
+            "क्या आप पिछली जगह से exam RESUME करना चाहते हैं?"
+        )){
+            restoreExam(existing);
+            return;
+        }
+        clearSavedExam();
+    }
 
-
-    studentId =
-        document
-        .getElementById("studentId")
-        .value
-        .trim();
-
+    student = document.getElementById("studentName").value.trim();
+    studentId = document.getElementById("studentId").value.trim();
 
     if(!student || !studentId){
-
-        alert(
-            "Please enter Student Name and Student ID.\n\nकृपया Student Name और Student ID भरें।"
-        );
-
+        alert("Please enter Student Name and Student ID.\n\nकृपया Student Name और Student ID भरें।");
         return;
     }
 
+    q = 0;
+    answers = Array(questions.length).fill(null);
+    seconds = EXAM_DURATION;
+    startedAt = Date.now();
+    submitted = false;
 
-    document
-        .getElementById("start")
-        .classList
-        .add("hidden");
-
-
-    document
-        .getElementById("exam")
-        .classList
-        .remove("hidden");
-
-
-    startedAt =
-        Date.now();
-
+    document.getElementById("start").classList.add("hidden");
+    document.getElementById("exam").classList.remove("hidden");
+    document.getElementById("timer").classList.remove("hidden");
 
     buildPalette();
-
     render();
-
     updateTimer();
-
-
-    timerInt =
-        setInterval(()=>{
-
-            seconds--;
-
-            updateTimer();
-
-
-            /* =========================================
-               TIME OVER
-               ========================================= */
-
-            if(seconds <= 0){
-
-                seconds = 0;
-
-                clearInterval(timerInt);
-
-                timerInt = null;
-
-                updateTimer();
-
-                setTimeout(()=>{
-
-                    submitExam(true);
-
-                },100);
-
-            }
-
-        },1000);
-
+    saveExamState(true);
+    startTimer();
 }
 
+function startTimer(){
+    clearInterval(timerInt);
+    timerInt = setInterval(()=>{
+        if(submitted) return;
+
+        const elapsed = startedAt ? Math.floor((Date.now()-startedAt)/1000) : 0;
+        seconds = Math.max(0, EXAM_DURATION-elapsed);
+        updateTimer();
+        saveExamState();
+
+        if(seconds <= 0){
+            seconds=0;
+            clearInterval(timerInt);
+            timerInt=null;
+            updateTimer();
+            setTimeout(()=>submitExam(true),100);
+        }
+    },1000);
+}
+
+function saveExamState(force=false){
+    if(!student || !studentId || submitted) return;
+
+    const state={
+        version:2,
+        examName:"Excel Crash Course - 75 MCQ",
+        student,
+        studentId,
+        q,
+        answers,
+        startedAt,
+        seconds,
+        savedAt:Date.now(),
+        submitted:false
+    };
+
+    try{
+        const signature=JSON.stringify(state);
+        if(!force && signature===lastSavedSignature) return;
+        localStorage.setItem(EXAM_STORAGE_KEY,signature);
+        lastSavedSignature=signature;
+
+        const box=document.getElementById("saveStatus");
+        if(box){
+            box.textContent="💾 Saved / उत्तर सुरक्षित हैं";
+            box.style.color="#067647";
+        }
+    }catch(error){
+        console.error("Local auto-save error:",error);
+        const box=document.getElementById("saveStatus");
+        if(box){
+            box.textContent="⚠️ Local Save Unavailable";
+            box.style.color="#b42318";
+        }
+    }
+}
+
+function loadSavedExam(){
+    try{
+        const raw=localStorage.getItem(EXAM_STORAGE_KEY);
+        if(!raw) return null;
+        const state=JSON.parse(raw);
+        if(!state || state.version!==2) return null;
+        if(state.examName!=="Excel Crash Course - 75 MCQ") return null;
+        if(!Array.isArray(state.answers) || state.answers.length!==questions.length) return null;
+        if(!state.student || !state.studentId || !state.startedAt) return null;
+
+        const elapsed=Math.floor((Date.now()-Number(state.startedAt))/1000);
+        state.seconds=Math.max(0,EXAM_DURATION-elapsed);
+        return state;
+    }catch(error){
+        console.error("Saved exam recovery error:",error);
+        return null;
+    }
+}
+
+function restoreExam(state){
+    student=String(state.student);
+    studentId=String(state.studentId);
+    q=Math.min(Math.max(Number(state.q)||0,0),questions.length-1);
+    answers=state.answers.map(x=>x===null?null:Number(x));
+    startedAt=Number(state.startedAt);
+    seconds=Math.max(0,EXAM_DURATION-Math.floor((Date.now()-startedAt)/1000));
+    submitted=false;
+
+    document.getElementById("studentName").value=student;
+    document.getElementById("studentId").value=studentId;
+    document.getElementById("start").classList.add("hidden");
+    document.getElementById("exam").classList.remove("hidden");
+    document.getElementById("timer").classList.remove("hidden");
+
+    buildPalette();
+    render();
+    updateTimer();
+
+    const box=document.getElementById("saveStatus");
+    if(box){
+        box.textContent="🔄 Exam Resumed / पिछला exam वापस शुरू";
+        box.style.color="#075985";
+    }
+
+    startTimer();
+
+    if(seconds<=0) submitExam(true);
+}
+
+function clearSavedExam(){
+    try{localStorage.removeItem(EXAM_STORAGE_KEY);}catch(error){console.error(error);}
+}
+
+window.addEventListener("beforeunload",function(e){
+    if(student && studentId && !submitted){
+        saveExamState(true);
+        e.preventDefault();
+        e.returnValue="Your exam progress is saved. Are you sure you want to leave?";
+    }
+});
+
+document.addEventListener("keydown",function(e){
+    if(student && studentId && !submitted){
+        const refreshKey=e.key==="F5" || (e.ctrlKey && e.key.toLowerCase()==="r") || (e.metaKey && e.key.toLowerCase()==="r");
+        if(refreshKey){
+            e.preventDefault();
+            saveExamState(true);
+            alert("⚠️ Exam is still running.\n\nYour answers are already saved. Please do not refresh the page.\n\nExam refresh करने की जरूरत नहीं है — आपके answers automatically save हो रहे हैं।");
+        }
+    }
+});
 
 /* =====================================================
    TIMER
@@ -3317,6 +3415,7 @@ function buildPalette(){
                 q = i;
 
                 render();
+                saveExamState(true);
 
                 window.scrollTo({
                     top:0,
@@ -3461,6 +3560,7 @@ function render(){
 
 
                 update();
+                saveExamState(true);
 
             };
 
@@ -3568,6 +3668,7 @@ function nextQ(){
         q++;
 
         render();
+        saveExamState(true);
 
         window.scrollTo({
             top:0,
@@ -3602,6 +3703,7 @@ function prevQ(){
         q--;
 
         render();
+        saveExamState(true);
 
         window.scrollTo({
             top:0,
@@ -4096,6 +4198,8 @@ async function submitExam(auto=false){
         saveBox.style.color =
             "#07865e";
 
+        clearSavedExam();
+
     }
 
     else{
@@ -4362,6 +4466,51 @@ document.addEventListener(
     }
 );
 
+
+
+/* =====================================================
+   CHECK SAVED SESSION ON PAGE LOAD
+   ===================================================== */
+function checkForSavedExam(){
+    const state=loadSavedExam();
+    const box=document.getElementById("resumeBox");
+
+    if(!state){
+        if(box) box.classList.add("hidden");
+        return;
+    }
+
+    if(state.seconds<=0){
+        restoreExam(state);
+        return;
+    }
+
+    document.getElementById("studentName").value=state.student;
+    document.getElementById("studentId").value=state.studentId;
+
+    if(box){
+        box.classList.remove("hidden");
+        box.innerHTML=`
+            🔄 <b>Saved Exam Found / पिछला Exam मिला</b><br>
+            Student: <b>${escapeText(state.student)}</b> | ID: <b>${escapeText(state.studentId)}</b><br>
+            Progress: <b>${state.answers.filter(x=>x!==null).length}/${questions.length}</b> questions answered.<br>
+            ⏱️ Remaining time: <b>${formatSavedTime(state.seconds)}</b><br>
+            नीचे <b>START EXAM</b> दबाकर पिछली जगह से जारी करें।
+        `;
+    }
+}
+
+function escapeText(value){
+    return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+function formatSavedTime(sec){
+    sec=Math.max(0,Number(sec)||0);
+    const m=Math.floor(sec/60), s=sec%60;
+    return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+
+checkForSavedExam();
 </script>
 
 
