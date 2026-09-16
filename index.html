@@ -1320,6 +1320,184 @@ button:active{
 }
 
 
+
+/* =========================================================
+   ANSWER ANALYSIS
+   TRUE / WRONG SEPARATE VIEW
+   ========================================================= */
+.analysisBox{
+    margin:28px auto 0;
+    max-width:1000px;
+    text-align:left;
+    padding:22px;
+    background:linear-gradient(135deg,#f8fbff,#ffffff);
+    border:1px solid #dbe5f0;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(24,52,84,.08);
+}
+.analysisTitle{
+    text-align:center;
+    color:var(--navy);
+    font-size:21px;
+    font-weight:900;
+    margin-bottom:16px;
+}
+.analysisTabs{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+.analysisTab{
+    min-height:62px;
+    border:2px solid transparent;
+    font-size:15px;
+    font-weight:900;
+    letter-spacing:.2px;
+}
+.analysisTab span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:34px;
+    height:28px;
+    margin-left:7px;
+    padding:0 8px;
+    border-radius:20px;
+    background:rgba(255,255,255,.82);
+}
+.trueTab{
+    color:#08734f;
+    background:linear-gradient(135deg,#dcfff1,#baf5df);
+    border-color:#a7e8d0;
+}
+.wrongTab{
+    color:#a51f1f;
+    background:linear-gradient(135deg,#fff0f0,#ffd6d6);
+    border-color:#ffc1c1;
+}
+.analysisTab.active{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(15,45,80,.14);
+}
+.analysisTab.active.trueTab{
+    border-color:#10b981;
+}
+.analysisTab.active.wrongTab{
+    border-color:#ef4444;
+}
+.analysisList{
+    display:grid;
+    gap:14px;
+}
+.analysisCard{
+    position:relative;
+    padding:18px;
+    border-radius:16px;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    box-shadow:0 7px 20px rgba(24,52,84,.07);
+    overflow:hidden;
+    animation:analysisIn .35s ease both;
+}
+.analysisCard.true{
+    border-left:5px solid #10b981;
+}
+.analysisCard.wrong{
+    border-left:5px solid #ef4444;
+}
+.analysisQNo{
+    display:inline-block;
+    margin-bottom:8px;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:900;
+    background:#eef4ff;
+    color:#1769e0;
+}
+.analysisQuestion{
+    color:#172033;
+    font-size:16px;
+    line-height:1.55;
+    font-weight:800;
+}
+.analysisHindi{
+    margin-top:4px;
+    color:#475569;
+    font-size:15px;
+    line-height:1.6;
+}
+.answerRow{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:14px;
+}
+.answerBox{
+    padding:11px 13px;
+    border-radius:12px;
+    font-size:14px;
+    line-height:1.5;
+    border:1px solid #e2e8f0;
+}
+.answerBox strong{
+    display:block;
+    margin-bottom:3px;
+    font-size:12px;
+}
+.answerBox.studentTrue{
+    background:#ecfdf5;
+    border-color:#b7efd9;
+    color:#08734f;
+}
+.answerBox.studentWrong{
+    background:#fff1f2;
+    border-color:#fecdd3;
+    color:#a51f1f;
+}
+.answerBox.correctBox{
+    background:#effcf6;
+    border-color:#b7efd9;
+    color:#08734f;
+}
+.analysisEmpty{
+    padding:24px 16px;
+    text-align:center;
+    border-radius:14px;
+    color:#64748b;
+    background:#f8fafc;
+    border:1px dashed #cbd5e1;
+    font-weight:700;
+}
+@keyframes analysisIn{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:700px){
+    .analysisBox{padding:14px;}
+    .analysisTabs{grid-template-columns:1fr;}
+    .answerRow{grid-template-columns:1fr;}
+    .analysisTab{min-height:56px;}
+}
+@media print{
+    .analysisBox{
+        box-shadow:none;
+        border:1px solid #ddd;
+    }
+    .analysisTabs{
+        display:none;
+    }
+    .analysisList{
+        display:block;
+    }
+    .analysisCard{
+        margin-bottom:12px;
+        break-inside:avoid;
+        box-shadow:none;
+    }
+}
+
 /* =========================================================
    FOOTER
    ========================================================= */
@@ -2094,6 +2272,49 @@ button:active{
 
     <p id="rResult">
     </p>
+
+
+    <!-- =====================================================
+         ANSWER ANALYSIS
+         ===================================================== -->
+
+    <div class="analysisBox">
+
+        <div class="analysisTitle">
+            📊 Answer Analysis / उत्तर विश्लेषण
+        </div>
+
+        <div class="analysisTabs">
+
+            <button
+                type="button"
+                id="trueTab"
+                class="analysisTab trueTab"
+                onclick="showAnalysis('true')"
+            >
+                🟢 TRUE ANSWERS / सही उत्तर
+                <span id="trueCount">0</span>
+            </button>
+
+            <button
+                type="button"
+                id="wrongTab"
+                class="analysisTab wrongTab"
+                onclick="showAnalysis('wrong')"
+            >
+                🔴 WRONG ANSWERS / गलत उत्तर
+                <span id="wrongCount">0</span>
+            </button>
+
+        </div>
+
+        <div id="analysisList" class="analysisList">
+            <div class="analysisEmpty">
+                ऊपर से TRUE या WRONG ANSWERS चुनें।
+            </div>
+        </div>
+
+    </div>
 
 
     <button
@@ -3742,6 +3963,23 @@ async function submitExam(auto=false){
 
 
     /* =========================================
+       ANSWER ANALYSIS COUNTS
+       ========================================= */
+
+    const trueCountEl = document.getElementById("trueCount");
+    const wrongCountEl = document.getElementById("wrongCount");
+
+    if(trueCountEl)
+        trueCountEl.textContent = correct;
+
+    if(wrongCountEl)
+        wrongCountEl.textContent = wrong;
+
+    /* Show WRONG answers first so the student can immediately analyze mistakes. */
+    showAnalysis("wrong");
+
+
+    /* =========================================
        AUTO SUBMIT MESSAGE
        ========================================= */
 
@@ -3879,6 +4117,148 @@ async function submitExam(auto=false){
 
     }
 
+}
+
+
+
+
+/* =====================================================
+   ANSWER ANALYSIS
+   Shows TRUE and WRONG answers separately
+   ===================================================== */
+
+function showAnalysis(type){
+
+    const list = document.getElementById("analysisList");
+    const trueTab = document.getElementById("trueTab");
+    const wrongTab = document.getElementById("wrongTab");
+
+    if(!list || !trueTab || !wrongTab) return;
+
+    trueTab.classList.toggle("active", type === "true");
+    wrongTab.classList.toggle("active", type === "wrong");
+
+    let html = "";
+    let found = 0;
+
+    answers.forEach((selected, i) => {
+
+        const correctAnswer = questions[i][2];
+        const selectedAnswer =
+            selected === null
+            ? null
+            : questions[i][selected + 1];
+
+        const isCorrect =
+            selected !== null &&
+            selectedAnswer === correctAnswer;
+
+        if(type === "true" && isCorrect){
+
+            found++;
+
+            html += `
+                <div class="analysisCard true">
+
+                    <div class="analysisQNo">
+                        Q${i + 1} • CORRECT / सही
+                    </div>
+
+                    <div class="analysisQuestion">
+                        ${escapeAnalysisText(questions[i][0])}
+                    </div>
+
+                    <div class="analysisHindi">
+                        ${escapeAnalysisText(questions[i][1])}
+                    </div>
+
+                    <div class="answerRow">
+
+                        <div class="answerBox studentTrue">
+                            <strong>🟢 YOUR ANSWER / आपका उत्तर</strong>
+                            ${escapeAnalysisText(selectedAnswer)}
+                        </div>
+
+                        <div class="answerBox correctBox">
+                            <strong>✅ CORRECT ANSWER / सही उत्तर</strong>
+                            ${escapeAnalysisText(correctAnswer)}
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+        }
+
+        if(type === "wrong" && selected !== null && !isCorrect){
+
+            found++;
+
+            html += `
+                <div class="analysisCard wrong">
+
+                    <div class="analysisQNo">
+                        Q${i + 1} • WRONG / गलत
+                    </div>
+
+                    <div class="analysisQuestion">
+                        ${escapeAnalysisText(questions[i][0])}
+                    </div>
+
+                    <div class="analysisHindi">
+                        ${escapeAnalysisText(questions[i][1])}
+                    </div>
+
+                    <div class="answerRow">
+
+                        <div class="answerBox studentWrong">
+                            <strong>🔴 YOUR ANSWER / आपका उत्तर</strong>
+                            ${escapeAnalysisText(selectedAnswer)}
+                        </div>
+
+                        <div class="answerBox correctBox">
+                            <strong>🟢 CORRECT ANSWER / सही उत्तर</strong>
+                            ${escapeAnalysisText(correctAnswer)}
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+        }
+
+    });
+
+    if(found === 0){
+
+        html = `
+            <div class="analysisEmpty">
+                ${
+                    type === "true"
+                    ? "🎉 कोई सही उत्तर नहीं मिला।"
+                    : "🎉 कोई गलत उत्तर नहीं है। Excellent Performance!"
+                }
+            </div>
+        `;
+
+    }
+
+    list.innerHTML = html;
+}
+
+
+/* Safe text display inside analysis */
+function escapeAnalysisText(value){
+
+    if(value === null || value === undefined)
+        return "—";
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/\"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
