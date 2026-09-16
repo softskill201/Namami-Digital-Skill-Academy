@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -578,7 +579,7 @@ table{
 
     width:100%;
 
-    min-width:1050px;
+    min-width:1200px;
 
     border-collapse:collapse;
 }
@@ -620,6 +621,10 @@ tr:hover td{
 }
 
 
+/* =====================================================
+   RESULT BADGES
+   ===================================================== */
+
 .badge{
 
     display:inline-block;
@@ -650,6 +655,67 @@ tr:hover td{
 }
 
 
+/* =====================================================
+   ACTION BUTTONS
+   ===================================================== */
+
+.action-buttons{
+
+    display:flex;
+
+    gap:6px;
+
+    align-items:center;
+}
+
+
+.view-btn{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1769e0,
+            #0b4da8
+        );
+
+    padding:7px 10px;
+
+    font-size:12px;
+}
+
+
+.delete-btn{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #b91c1c
+        );
+
+    padding:7px 10px;
+
+    font-size:12px;
+}
+
+
+.view-btn:hover,
+.delete-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =====================================================
+   EMPTY / LOADING
+   ===================================================== */
+
 .empty{
 
     padding:45px 20px;
@@ -669,6 +735,253 @@ tr:hover td{
     color:var(--blue);
 
     font-weight:800;
+}
+
+
+/* =====================================================
+   MODAL
+   ===================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:9999;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(7,26,51,.65);
+
+    backdrop-filter:
+        blur(5px);
+}
+
+
+.modal-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    padding:25px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.25);
+
+    animation:
+        modalIn .2s ease;
+}
+
+
+@keyframes modalIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            scale(.92)
+            translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            scale(1)
+            translateY(0);
+
+    }
+
+}
+
+
+.modal-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+
+.modal-header h3{
+
+    margin:0;
+
+    color:var(--navy);
+
+    font-size:22px;
+}
+
+
+.close-modal{
+
+    width:36px;
+
+    height:36px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:#fff;
+
+    background:#64748b;
+
+    font-size:22px;
+
+    padding:0;
+}
+
+
+.detail-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
+}
+
+
+.detail-item{
+
+    padding:12px;
+
+    background:#f8fafc;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+}
+
+
+.detail-item.full{
+
+    grid-column:
+        1 / -1;
+}
+
+
+.detail-label{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+}
+
+
+.detail-value{
+
+    font-size:14px;
+
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+
+.confirm-icon{
+
+    text-align:center;
+
+    font-size:50px;
+
+    margin-bottom:10px;
+}
+
+
+.confirm-title{
+
+    text-align:center;
+
+    margin:0 0 8px;
+
+    color:#b91c1c;
+
+    font-size:22px;
+}
+
+
+.confirm-text{
+
+    text-align:center;
+
+    color:var(--muted);
+
+    line-height:1.6;
+
+    margin-bottom:22px;
+}
+
+
+.confirm-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+}
+
+
+.cancel-btn{
+
+    color:#fff;
+
+    background:#64748b;
+}
+
+
+.confirm-delete{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #b91c1c
+        );
 }
 
 
@@ -734,13 +1047,25 @@ tr:hover td{
         font-size:23px;
     }
 
+    .detail-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .detail-item.full{
+
+        grid-column:auto;
+    }
+
 }
+
 
 @media(max-width:500px){
 
     .stats{
 
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:
+            1fr 1fr;
 
         gap:9px;
     }
@@ -760,6 +1085,16 @@ tr:hover td{
         margin:35px auto;
 
         padding:25px 18px;
+    }
+
+    .actions{
+
+        width:100%;
+    }
+
+    .actions button{
+
+        flex:1;
     }
 
 }
@@ -1066,6 +1401,115 @@ tr:hover td{
 
 
 <!-- =====================================================
+     VIEW RESULT MODAL
+     ===================================================== -->
+
+<div
+    id="viewModal"
+    class="modal"
+    onclick="closeModalOutside(event,'viewModal')"
+>
+
+    <div
+        class="modal-box"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="modal-header">
+
+            <h3>
+                👁️ Student Result Details
+            </h3>
+
+            <button
+                class="close-modal"
+                onclick="closeModal('viewModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="viewDetails"
+            class="detail-grid">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     DELETE CONFIRMATION MODAL
+     ===================================================== -->
+
+<div
+    id="deleteModal"
+    class="modal"
+    onclick="closeModalOutside(event,'deleteModal')"
+>
+
+    <div
+        class="modal-box"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="confirm-icon">
+            ⚠️
+        </div>
+
+
+        <h3 class="confirm-title">
+            Delete Result?
+        </h3>
+
+
+        <p class="confirm-text">
+
+            क्या आप इस examination result को
+            permanently delete करना चाहते हैं?
+
+            <br>
+
+            <b>
+                यह action वापस नहीं किया जा सकता।
+            </b>
+
+        </p>
+
+
+        <div class="confirm-actions">
+
+            <button
+                class="cancel-btn"
+                onclick="closeModal('deleteModal')"
+            >
+
+                Cancel
+
+            </button>
+
+
+            <button
+                id="confirmDeleteButton"
+                class="confirm-delete"
+                onclick="confirmDelete()"
+            >
+
+                🗑️ Delete Result
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
      FOOTER
      ===================================================== -->
 
@@ -1109,6 +1553,12 @@ let allResults = [];
 
 let filteredResults = [];
 
+let deleteRecordId = null;
+
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+   ===================================================== */
 
 try{
 
@@ -1192,11 +1642,9 @@ async function login(){
             .auth
             .signInWithPassword({
 
-                email:
-                    email,
+                email:email,
 
-                password:
-                    password
+                password:password
 
             });
 
@@ -1497,15 +1945,34 @@ function applyFilters(){
                 const text =
 
                     (
-                        r.student_name
+                        r.student_name || ""
+                    )
+                    +
+                    " "
+                    +
+                    (
+                        r.student_id || ""
+                    )
+                    +
+                    " "
+                    +
+                    (
+                        r.exam_name || ""
+                    )
+                    .toLowerCase();
+
+
+                const searchableText =
+                    (
+                        String(r.student_name || "")
                         +
                         " "
                         +
-                        r.student_id
+                        String(r.student_id || "")
                         +
                         " "
                         +
-                        r.exam_name
+                        String(r.exam_name || "")
                     )
                     .toLowerCase();
 
@@ -1514,7 +1981,7 @@ function applyFilters(){
 
                     !search
                     ||
-                    text.includes(search);
+                    searchableText.includes(search);
 
 
                 const matchesResult =
@@ -1610,6 +2077,8 @@ function renderTable(data){
 
             <th>Submitted At</th>
 
+            <th>Action</th>
+
         </tr>
 
         </thead>
@@ -1646,6 +2115,14 @@ function renderTable(data){
                  </span>`;
 
 
+            /*
+             * Record ID
+             */
+
+            const recordId =
+                r.id || "";
+
+
             html +=
 
                 `
@@ -1655,67 +2132,135 @@ function renderTable(data){
                         ${index + 1}
                     </td>
 
+
                     <td>
+
                         <b>
+
                             ${escapeHTML(
                                 r.student_name
-                                || "-"
+                                ||
+                                "-"
                             )}
+
                         </b>
+
                     </td>
 
+
                     <td>
+
                         ${escapeHTML(
                             r.student_id
-                            || "-"
+                            ||
+                            "-"
                         )}
+
                     </td>
 
+
                     <td>
+
                         ${escapeHTML(
                             r.exam_name
-                            || "-"
+                            ||
+                            "-"
                         )}
+
                     </td>
 
+
                     <td>
+
                         ${r.total_questions ?? "-"}
+
                     </td>
 
+
                     <td>
+
                         ${r.correct_answers ?? "-"}
+
                     </td>
 
+
                     <td>
+
                         ${r.wrong_answers ?? "-"}
+
                     </td>
 
+
                     <td>
+
                         ${r.unanswered ?? "-"}
+
                     </td>
 
+
                     <td>
+
                         <b>
+
                             ${Number(
                                 r.percentage || 0
                             ).toFixed(2)}%
+
                         </b>
+
                     </td>
 
+
                     <td>
+
                         ${badge}
+
                     </td>
 
+
                     <td>
+
                         ${formatDuration(
                             r.duration_seconds
                         )}
+
                     </td>
 
+
                     <td>
+
                         ${formatDate(
                             r.submitted_at
                         )}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <button
+                                class="view-btn"
+                                onclick="viewResult(${index})"
+                            >
+
+                                👁️ View
+
+                            </button>
+
+
+                            <button
+                                class="delete-btn"
+                                onclick="openDeleteModal('${escapeJS(recordId)}')"
+                            >
+
+                                🗑️ Delete
+
+                            </button>
+
+                        </div>
+
                     </td>
 
                 </tr>
@@ -1738,6 +2283,470 @@ function renderTable(data){
 
     tableArea.innerHTML =
         html;
+
+}
+
+
+/* =====================================================
+   VIEW RESULT
+   ===================================================== */
+
+function viewResult(index){
+
+    const result =
+        filteredResults[index];
+
+
+    if(!result){
+
+        alert(
+            "Result record not found."
+        );
+
+        return;
+
+    }
+
+
+    const details =
+        document
+        .getElementById("viewDetails");
+
+
+    details.innerHTML =
+
+        `
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Student Name
+            </span>
+
+            <span class="detail-value">
+                ${escapeHTML(
+                    result.student_name || "-"
+                )}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Student ID
+            </span>
+
+            <span class="detail-value">
+                ${escapeHTML(
+                    result.student_id || "-"
+                )}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item full">
+
+            <span class="detail-label">
+                Examination
+            </span>
+
+            <span class="detail-value">
+                ${escapeHTML(
+                    result.exam_name || "-"
+                )}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Total Questions
+            </span>
+
+            <span class="detail-value">
+                ${result.total_questions ?? "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Correct Answers
+            </span>
+
+            <span class="detail-value">
+                ${result.correct_answers ?? "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Wrong Answers
+            </span>
+
+            <span class="detail-value">
+                ${result.wrong_answers ?? "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Unanswered
+            </span>
+
+            <span class="detail-value">
+                ${result.unanswered ?? "-"}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Percentage
+            </span>
+
+            <span class="detail-value">
+                ${Number(
+                    result.percentage || 0
+                ).toFixed(2)}%
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Result
+            </span>
+
+            <span class="detail-value">
+
+                ${
+                    String(result.result || "")
+                    .toUpperCase()
+                    === "PASS"
+
+                    ?
+
+                    "✅ PASS"
+
+                    :
+
+                    "❌ FAIL"
+                }
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-item">
+
+            <span class="detail-label">
+                Duration
+            </span>
+
+            <span class="detail-value">
+                ${formatDuration(
+                    result.duration_seconds
+                )}
+            </span>
+
+        </div>
+
+
+        <div class="detail-item full">
+
+            <span class="detail-label">
+                Submitted At
+            </span>
+
+            <span class="detail-value">
+                ${formatDate(
+                    result.submitted_at
+                )}
+            </span>
+
+        </div>
+
+        `;
+
+
+    document
+        .getElementById("viewModal")
+        .style.display =
+        "flex";
+
+}
+
+
+/* =====================================================
+   OPEN DELETE MODAL
+   ===================================================== */
+
+function openDeleteModal(id){
+
+    if(!id){
+
+        alert(
+            "❌ Record ID not found."
+        );
+
+        return;
+
+    }
+
+
+    deleteRecordId =
+        id;
+
+
+    document
+        .getElementById("deleteModal")
+        .style.display =
+        "flex";
+
+}
+
+
+/* =====================================================
+   CONFIRM DELETE
+   ===================================================== */
+
+async function confirmDelete(){
+
+    if(!deleteRecordId){
+
+        alert(
+            "❌ Record ID not found."
+        );
+
+        return;
+
+    }
+
+
+    if(!supabaseClient){
+
+        alert(
+            "❌ Supabase connection not found."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document
+        .getElementById("confirmDeleteButton");
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "⏳ Deleting...";
+
+
+    try{
+
+        const {
+            error
+        } =
+
+            await supabaseClient
+
+            .from("exam_results")
+
+            .delete()
+
+            .eq(
+                "id",
+                deleteRecordId
+            );
+
+
+        if(error){
+
+            console.error(
+                "Delete Error:",
+                error
+            );
+
+
+            alert(
+
+                "❌ Record delete नहीं हुआ.\n\n"
+
+                +
+
+                error.message
+
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                "🗑️ Delete Result";
+
+
+            return;
+
+        }
+
+
+        /*
+         * Remove from local arrays
+         */
+
+        allResults =
+            allResults.filter(
+                r =>
+                String(r.id)
+                !==
+                String(deleteRecordId)
+            );
+
+
+        filteredResults =
+            filteredResults.filter(
+                r =>
+                String(r.id)
+                !==
+                String(deleteRecordId)
+            );
+
+
+        /*
+         * Reset delete ID
+         */
+
+        deleteRecordId =
+            null;
+
+
+        /*
+         * Close modal
+         */
+
+        closeModal(
+            "deleteModal"
+        );
+
+
+        /*
+         * Update dashboard
+         */
+
+        updateStats(
+            allResults
+        );
+
+
+        renderTable(
+            filteredResults
+        );
+
+
+        alert(
+            "✅ Result successfully deleted."
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Delete Error:",
+            error
+        );
+
+
+        alert(
+            "❌ Something went wrong while deleting the record."
+        );
+
+    }
+
+    finally{
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "🗑️ Delete Result";
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+   ===================================================== */
+
+function closeModal(id){
+
+    const modal =
+        document.getElementById(id);
+
+
+    if(modal){
+
+        modal.style.display =
+            "none";
+
+    }
+
+
+    if(id === "deleteModal"){
+
+        deleteRecordId =
+            null;
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+   ===================================================== */
+
+function closeModalOutside(
+    event,
+    id
+){
+
+    if(
+        event.target.id === id
+    ){
+
+        closeModal(id);
+
+    }
 
 }
 
@@ -1774,11 +2783,17 @@ function formatDuration(seconds){
 
 
     return
-        String(min).padStart(2,"0")
+        String(min)
+        .padStart(2,"0")
+
         +
+
         ":"
+
         +
-        String(sec).padStart(2,"0");
+
+        String(sec)
+        .padStart(2,"0");
 
 }
 
@@ -1822,22 +2837,27 @@ function formatDate(date){
 function escapeHTML(value){
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -1847,24 +2867,68 @@ function escapeHTML(value){
 
 
 /* =====================================================
-   CSV DOWNLOAD
+   ESCAPE JAVASCRIPT STRING
+   ===================================================== */
+
+function escapeJS(value){
+
+    return String(value)
+
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+
+        .replace(
+            /'/g,
+            "\\'"
+        )
+
+        .replace(
+            /"/g,
+            '\\"'
+        )
+
+        .replace(
+            /\r/g,
+            "\\r"
+        )
+
+        .replace(
+            /\n/g,
+            "\\n"
+        );
+
+}
+
+
+/* =====================================================
+   CSV ESCAPE
    ===================================================== */
 
 function csvEscape(value){
 
     return '"' +
+
         String(
             value ?? ""
         )
+
         .replace(
             /"/g,
             '""'
         )
+
         +
+
         '"';
 
 }
 
+
+/* =====================================================
+   CSV DOWNLOAD
+   ===================================================== */
 
 function downloadCSV(){
 
@@ -1882,15 +2946,25 @@ function downloadCSV(){
     const headers = [
 
         "Student Name",
+
         "Student ID",
+
         "Exam",
+
         "Total Questions",
+
         "Correct Answers",
+
         "Wrong Answers",
+
         "Unanswered",
+
         "Percentage",
+
         "Result",
+
         "Duration Seconds",
+
         "Submitted At"
 
     ];
@@ -1931,7 +3005,9 @@ function downloadCSV(){
         headers
         .map(csvEscape)
         .join(",")
+
         +
+
         "\n";
 
 
@@ -1943,7 +3019,9 @@ function downloadCSV(){
                 row
                 .map(csvEscape)
                 .join(",")
+
                 +
+
                 "\n";
 
         }
@@ -1962,11 +3040,15 @@ function downloadCSV(){
 
 
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
 
     const a =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
     a.href =
@@ -1977,16 +3059,22 @@ function downloadCSV(){
         "Namami_Exam_Results.csv";
 
 
-    document.body.appendChild(a);
+    document
+        .body
+        .appendChild(a);
 
 
     a.click();
 
 
-    document.body.removeChild(a);
+    document
+        .body
+        .removeChild(a);
 
 
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(
+        url
+    );
 
 }
 
@@ -2051,6 +3139,30 @@ document.addEventListener(
 
 
 /* =====================================================
+   ESC KEY CLOSE MODALS
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Escape"){
+
+            closeModal(
+                "viewModal"
+            );
+
+            closeModal(
+                "deleteModal"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
    START
    ===================================================== */
 
@@ -2062,3 +3174,4 @@ checkLogin();
 </body>
 
 </html>
+```
