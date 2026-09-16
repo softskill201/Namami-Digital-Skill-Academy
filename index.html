@@ -12,17 +12,15 @@
 Namami Digital Skills Academy - Excel Crash Course Exam
 </title>
 
-
 <style>
 
 /* =========================================================
    NAMAMI DIGITAL SKILLS ACADEMY
-   EXCEL CRASH COURSE ONLINE EXAM
-   PREMIUM ANIMATED DESIGN
+   EXCEL CRASH COURSE - 75 MCQ
+   PREMIUM BILINGUAL EXAM DESIGN
    ========================================================= */
 
 :root{
-
     --navy:#071a33;
     --navy2:#0c3b70;
 
@@ -37,16 +35,16 @@ Namami Digital Skills Academy - Excel Crash Course Exam
     --red:#ef4444;
     --red2:#b91c1c;
 
+    --orange:#f59e0b;
+
     --white:#ffffff;
 
     --bg:#eef5fc;
 
     --text:#172033;
-
     --muted:#64748b;
 
     --border:#dbe5f0;
-
 }
 
 
@@ -58,11 +56,9 @@ Namami Digital Skills Academy - Excel Crash Course Exam
     box-sizing:border-box;
 }
 
-
 html{
     scroll-behavior:smooth;
 }
-
 
 body{
 
@@ -70,11 +66,14 @@ body{
 
     min-height:100vh;
 
+    position:relative;
+
     overflow-x:hidden;
 
     font-family:
         "Segoe UI",
         Arial,
+        "Noto Sans Devanagari",
         sans-serif;
 
     color:var(--text);
@@ -103,68 +102,72 @@ body{
 
 
 /* =========================================================
-   BACKGROUND DECORATION
+   LOGO WATERMARK
    ========================================================= */
 
-body:before,
-body:after{
+body::before{
 
     content:"";
 
     position:fixed;
 
-    width:330px;
+    inset:0;
 
-    height:330px;
+    background-image:url("logo.png");
 
-    border-radius:50%;
+    background-repeat:no-repeat;
 
-    border:1px solid
-        rgba(23,105,224,.10);
+    background-position:center center;
+
+    background-size:min(520px,70vw);
+
+    opacity:.085;
+
+    filter:saturate(1.15) contrast(1.08);
 
     pointer-events:none;
 
-    z-index:-1;
+    z-index:0;
 
     animation:
-        floatingCircle
+        watermarkFloat
         8s
         ease-in-out
         infinite;
 }
 
 
-body:before{
+/* Second faint logo layer */
 
-    left:-160px;
+body::after{
 
-    bottom:-130px;
+    content:"NAMAMI DIGITAL SKILLS ACADEMY";
 
-    box-shadow:
+    position:fixed;
 
-        0 0 0 50px
-        rgba(0,184,217,.035),
+    left:50%;
 
-        0 0 0 100px
-        rgba(0,184,217,.02);
-}
+    top:50%;
 
+    transform:
+        translate(-50%,-50%)
+        rotate(-18deg);
 
-body:after{
+    font-size:clamp(28px,5vw,70px);
 
-    right:-160px;
+    font-weight:900;
 
-    top:25%;
+    letter-spacing:5px;
 
-    box-shadow:
+    color:#1769e0;
 
-        0 0 0 50px
-        rgba(23,105,224,.035),
+    opacity:.018;
 
-        0 0 0 100px
-        rgba(23,105,224,.02);
+    white-space:nowrap;
 
-    animation-delay:2s;
+    pointer-events:none;
+
+    z-index:0;
 }
 
 
@@ -175,6 +178,8 @@ body:after{
 .header{
 
     position:sticky;
+
+    isolation:isolate;
 
     top:0;
 
@@ -188,9 +193,11 @@ body:after{
 
     gap:18px;
 
-    padding:17px 26px;
+    padding:15px 26px;
 
     color:#fff;
+
+    border-bottom:1px solid rgba(255,255,255,.18);
 
     background:
 
@@ -209,7 +216,7 @@ body:after{
 }
 
 
-/* Header Shine */
+/* Header shine */
 
 .header:after{
 
@@ -246,6 +253,46 @@ body:after{
 }
 
 
+.brand{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+
+.brandLogo{
+
+    width:48px;
+
+    height:48px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:5px;
+
+    border-radius:12px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.20);
+
+    animation:
+        logoPulse
+        3s
+        ease-in-out
+        infinite;
+}
+
+
 .header h1{
 
     position:relative;
@@ -254,11 +301,11 @@ body:after{
 
     margin:0;
 
-    font-size:22px;
+    font-size:21px;
 
     font-weight:900;
 
-    letter-spacing:.8px;
+    letter-spacing:.7px;
 }
 
 
@@ -270,9 +317,9 @@ body:after{
 
     display:block;
 
-    margin-top:5px;
+    margin-top:4px;
 
-    opacity:.88;
+    opacity:.9;
 
     letter-spacing:.3px;
 }
@@ -288,13 +335,13 @@ body:after{
 
     z-index:5;
 
-    min-width:112px;
+    min-width:120px;
 
-    padding:11px 16px;
+    padding:10px 16px;
 
     text-align:center;
 
-    font-size:22px;
+    font-size:23px;
 
     font-weight:900;
 
@@ -324,11 +371,66 @@ body:after{
 
 .wrap{
 
-    max-width:1100px;
+    position:relative;
+
+    z-index:2;
+
+    max-width:1120px;
+
+    min-height:calc(100vh - 170px);
 
     margin:30px auto;
 
+    isolation:isolate;
+
     padding:0 16px;
+}
+
+
+.wrap:before,
+.wrap:after{
+
+    content:"";
+
+    position:absolute;
+
+    z-index:-1;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    animation:floatingCircle 7s ease-in-out infinite;
+}
+
+
+.wrap:before{
+
+    width:130px;
+
+    height:130px;
+
+    left:-55px;
+
+    top:90px;
+
+    background:rgba(0,184,217,.13);
+}
+
+
+.wrap:after{
+
+    width:170px;
+
+    height:170px;
+
+    right:-75px;
+
+    bottom:80px;
+
+    background:rgba(16,185,129,.11);
+
+    animation-delay:-3s;
 }
 
 
@@ -341,10 +443,10 @@ body:after{
     position:relative;
 
     background:
-        rgba(255,255,255,.92);
+        rgba(255,255,255,.93);
 
     backdrop-filter:
-        blur(12px);
+        blur(13px);
 
     border:
         1px solid
@@ -354,9 +456,12 @@ body:after{
 
     padding:28px;
 
+    border-top:1px solid rgba(255,255,255,.95);
+
     box-shadow:
         0 18px 55px
-        rgba(24,52,84,.13);
+        rgba(24,52,84,.13),
+        0 2px 0 rgba(255,255,255,.65) inset;
 
     overflow:hidden;
 
@@ -367,7 +472,7 @@ body:after{
 }
 
 
-/* Top colourful line */
+/* Colourful top line */
 
 .card:before{
 
@@ -389,8 +494,17 @@ body:after{
             90deg,
             var(--cyan),
             var(--blue),
-            var(--green)
+            var(--green),
+            var(--orange)
         );
+
+    background-size:300% 100%;
+
+    animation:
+        gradientMove
+        4s
+        linear
+        infinite;
 }
 
 
@@ -403,6 +517,10 @@ body:after{
     text-align:center;
 
     padding:42px 34px;
+
+    background:
+        radial-gradient(circle at 50% 0%, rgba(23,105,224,.10), transparent 38%),
+        rgba(255,255,255,.94);
 }
 
 
@@ -419,16 +537,52 @@ body:after{
 }
 
 
-#start h2:before{
+.startLogo{
 
-    content:"✦ ";
+    width:105px;
 
-    color:var(--cyan);
+    padding:10px;
+
+    background:rgba(255,255,255,.92);
+
+    border:1px solid rgba(23,105,224,.14);
+
+    height:105px;
+
+    object-fit:contain;
+
+    margin:0 auto 15px;
+
+    display:block;
+
+    border-radius:22px;
+
+    animation:
+        logoFloat
+        3s
+        ease-in-out
+        infinite;
+
+    filter:
+        drop-shadow(
+            0 10px 15px
+            rgba(23,105,224,.20)
+        );
+}
+
+
+.subtitle{
+
+    color:#64748b;
+
+    font-size:15px;
+
+    line-height:1.7;
 }
 
 
 /* =========================================================
-   EXAM INFORMATION
+   INFO GRID
    ========================================================= */
 
 .info-grid{
@@ -446,9 +600,13 @@ body:after{
 
 .info-grid p{
 
+    position:relative;
+
     margin:0;
 
     padding:15px;
+
+    overflow:hidden;
 
     text-align:left;
 
@@ -471,6 +629,27 @@ body:after{
     box-shadow:
         0 5px 15px
         rgba(24,52,84,.04);
+}
+
+
+.info-grid p:after{
+
+    content:"";
+
+    position:absolute;
+
+    width:70px;
+
+    height:70px;
+
+    right:-25px;
+
+    bottom:-30px;
+
+    background:rgba(0,184,217,.10);
+
+    border-radius:50%;
+
 }
 
 
@@ -545,10 +724,6 @@ input:focus{
 }
 
 
-/* =========================================================
-   RADIO
-   ========================================================= */
-
 input[type="radio"]{
 
     width:auto;
@@ -604,10 +779,6 @@ button:active{
 }
 
 
-/* =========================================================
-   PRIMARY
-   ========================================================= */
-
 .primary{
 
     color:#fff;
@@ -619,12 +790,12 @@ button:active{
             var(--blue),
             var(--blue2)
         );
+
+    box-shadow:
+        0 8px 20px
+        rgba(23,105,224,.20);
 }
 
-
-/* =========================================================
-   NEXT
-   ========================================================= */
 
 .next{
 
@@ -640,10 +811,6 @@ button:active{
 }
 
 
-/* =========================================================
-   PREVIOUS
-   ========================================================= */
-
 .prev{
 
     color:#fff;
@@ -651,10 +818,6 @@ button:active{
     background:#64748b;
 }
 
-
-/* =========================================================
-   SUBMIT
-   ========================================================= */
 
 .submit{
 
@@ -755,6 +918,14 @@ button:active{
             var(--green)
         );
 
+    background-size:200% 100%;
+
+    animation:
+        progressMove
+        3s
+        linear
+        infinite;
+
     transition:
         width .35s ease;
 }
@@ -776,7 +947,7 @@ button:active{
 
     padding:13px;
 
-    max-height:145px;
+    max-height:150px;
 
     overflow:auto;
 
@@ -800,13 +971,11 @@ button:active{
 }
 
 
-/* Question number */
-
 .pbtn{
 
-    width:38px;
+    width:37px;
 
-    height:38px;
+    height:37px;
 
     padding:0;
 
@@ -820,7 +989,7 @@ button:active{
 
     border-radius:9px;
 
-    font-size:13px;
+    font-size:12px;
 }
 
 
@@ -831,8 +1000,6 @@ button:active{
         scale(1.04);
 }
 
-
-/* Answered */
 
 .pbtn.answered{
 
@@ -849,8 +1016,6 @@ button:active{
     border-color:#10b981;
 }
 
-
-/* Current */
 
 .pbtn.current{
 
@@ -875,13 +1040,13 @@ button:active{
     margin:
         20px 0 17px;
 
-    padding:18px;
+    padding:20px;
 
-    font-size:21px;
+    font-size:20px;
 
     font-weight:800;
 
-    line-height:1.5;
+    line-height:1.65;
 
     background:
 
@@ -906,6 +1071,28 @@ button:active{
         questionIn
         .3s
         ease;
+}
+
+
+.en{
+
+    display:block;
+
+    color:#0f172a;
+}
+
+
+.hi{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:#475569;
+
+    font-size:.91em;
+
+    font-weight:700;
 }
 
 
@@ -941,8 +1128,6 @@ button:active{
 }
 
 
-/* Left indicator */
-
 .opt:before{
 
     content:"";
@@ -962,8 +1147,6 @@ button:active{
     transition:.2s;
 }
 
-
-/* Hover */
 
 .opt:hover{
 
@@ -985,11 +1168,27 @@ button:active{
     width:auto;
 
     margin:
-        2px 11px 0 0;
+        3px 11px 0 0;
 }
 
 
-/* Selected */
+.optText{
+
+    line-height:1.5;
+
+    font-weight:600;
+}
+
+
+.optText .hi{
+
+    margin-top:3px;
+
+    font-size:.92em;
+
+    font-weight:600;
+}
+
 
 .opt:has(input:checked){
 
@@ -1064,6 +1263,26 @@ button:active{
 }
 
 
+.resultLogo{
+
+    width:90px;
+
+    padding:8px;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 22px rgba(23,105,224,.16);
+
+    height:90px;
+
+    object-fit:contain;
+
+    margin-bottom:10px;
+}
+
+
 .result h2{
 
     color:#0b6b4f;
@@ -1127,7 +1346,13 @@ button:active{
 
 .footer{
 
-    padding:22px;
+    position:relative;
+
+    z-index:2;
+
+    padding:20px 22px 26px;
+
+    border-top:1px solid rgba(23,105,224,.10);
 
     text-align:center;
 
@@ -1175,7 +1400,6 @@ button:active{
 @keyframes cardEntrance{
 
     from{
-
         opacity:0;
 
         transform:
@@ -1184,21 +1408,18 @@ button:active{
     }
 
     to{
-
         opacity:1;
 
         transform:
             translateY(0)
             scale(1);
     }
-
 }
 
 
 @keyframes questionIn{
 
     from{
-
         opacity:0;
 
         transform:
@@ -1206,20 +1427,17 @@ button:active{
     }
 
     to{
-
         opacity:1;
 
         transform:
             translateY(0);
     }
-
 }
 
 
 @keyframes scorePop{
 
     0%{
-
         opacity:0;
 
         transform:
@@ -1227,74 +1445,130 @@ button:active{
     }
 
     70%{
-
         transform:
             scale(1.08);
     }
 
     100%{
-
         opacity:1;
 
         transform:
             scale(1);
     }
-
 }
 
 
 @keyframes timerPulse{
 
     0%,100%{
-
         box-shadow:
             0 6px 20px
             rgba(0,0,0,.18);
     }
 
     50%{
-
         box-shadow:
             0 6px 28px
             rgba(239,68,68,.32);
     }
-
 }
 
 
 @keyframes headerShine{
 
     0%{
-
         transform:
             translateX(-120%);
     }
 
     25%,100%{
-
         transform:
             translateX(120%);
     }
-
 }
 
 
 @keyframes floatingCircle{
 
     0%,100%{
-
         transform:
             translateY(0)
             rotate(0deg);
     }
 
     50%{
-
         transform:
             translateY(-20px)
             rotate(5deg);
     }
+}
 
+
+@keyframes watermarkFloat{
+
+    0%,100%{
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+
+    50%{
+        transform:
+            scale(1.04)
+            rotate(2deg);
+    }
+}
+
+
+@keyframes logoPulse{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+}
+
+
+@keyframes logoFloat{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50%{
+        transform:
+            translateY(-7px)
+            rotate(2deg);
+    }
+}
+
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:300% 50%;
+    }
+}
+
+
+@keyframes progressMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:200% 50%;
+    }
 }
 
 
@@ -1307,19 +1581,27 @@ button:active{
     .header{
 
         padding:
-            13px 15px;
+            12px 13px;
+    }
+
+
+    .brandLogo{
+
+        width:40px;
+
+        height:40px;
     }
 
 
     .header h1{
 
-        font-size:16px;
+        font-size:15px;
     }
 
 
     .header small{
 
-        font-size:11px;
+        font-size:10px;
     }
 
 
@@ -1328,7 +1610,7 @@ button:active{
         min-width:88px;
 
         padding:
-            9px 10px;
+            8px 9px;
 
         font-size:17px;
     }
@@ -1340,7 +1622,7 @@ button:active{
             18px auto;
 
         padding:
-            0 10px;
+            0 9px;
     }
 
 
@@ -1365,6 +1647,14 @@ button:active{
     }
 
 
+    .startLogo{
+
+        width:85px;
+
+        height:85px;
+    }
+
+
     .info-grid{
 
         grid-template-columns:1fr;
@@ -1373,9 +1663,11 @@ button:active{
 
     .q{
 
-        font-size:18px;
+        font-size:17px;
 
         padding:15px;
+
+        line-height:1.55;
     }
 
 
@@ -1393,12 +1685,26 @@ button:active{
     }
 
 
+    .pbtn{
+
+        width:34px;
+
+        height:34px;
+    }
+
+
     .nav button{
 
         padding:
-            11px 13px;
+            11px 12px;
     }
 
+
+    .opt{
+
+        padding:
+            12px;
+    }
 }
 
 
@@ -1411,6 +1717,12 @@ button:active{
     body{
 
         background:#fff;
+    }
+
+    body::before,
+    body::after{
+
+        opacity:.03;
     }
 
 
@@ -1465,23 +1777,34 @@ button:active{
 
 <div class="header">
 
-    <div>
+    <div class="brand">
 
-        <h1>
-            NAMAMI DIGITAL SKILLS ACADEMY
-        </h1>
+        <img
+            src="logo.png"
+            class="brandLogo"
+            alt="Namami Digital Skills Academy Logo"
+        >
 
-        <small>
-            Excel Crash Course — Online MCQ Examination
-        </small>
+        <div>
+
+            <h1>
+                NAMAMI DIGITAL SKILLS ACADEMY
+            </h1>
+
+            <small>
+                Excel Crash Course Online MCQ Exam
+            </small>
+
+        </div>
 
     </div>
 
 
-    <div id="timer"
-         class="timer">
+    <div
+        id="timer"
+        class="timer">
 
-        60:00
+        75:00
 
     </div>
 
@@ -1500,8 +1823,16 @@ button:active{
      START SCREEN
      ===================================================== -->
 
-<div id="start"
-     class="card">
+<div
+    id="start"
+    class="card">
+
+
+    <img
+        src="logo.png"
+        class="startLogo"
+        alt="Namami Logo"
+    >
 
 
     <h2>
@@ -1509,50 +1840,60 @@ button:active{
     </h2>
 
 
+    <div class="subtitle">
+
+        <b>Excel Crash Course – Online Examination</b>
+
+        <br>
+
+        प्रश्न English और Hindi दोनों भाषाओं में दिए गए हैं।
+
+    </div>
+
+
     <div class="info-grid">
 
 
         <p>
 
-            <b>📘 Exam</b>
+            <b>📘 Exam / परीक्षा</b>
 
             <br>
 
-            Excel Crash Course
-            — 100 MCQ
+            Excel Crash Course — 75 MCQ
 
         </p>
 
 
         <p>
 
-            <b>⏱ Duration</b>
+            <b>⏱ Duration / समय</b>
 
             <br>
 
-            60 Minutes
+            75 Minutes
 
         </p>
 
 
         <p>
 
-            <b>🏆 Total Marks</b>
+            <b>🏆 Total Marks / कुल अंक</b>
 
             <br>
 
-            100
+            75 Marks
 
         </p>
 
 
         <p>
 
-            <b>🎯 Passing Marks</b>
+            <b>🎯 Passing Marks / उत्तीर्ण अंक</b>
 
             <br>
 
-            40
+            35 Marks
 
         </p>
 
@@ -1560,40 +1901,40 @@ button:active{
     </div>
 
 
-
     <label>
-        Student Name
+        Student Name / विद्यार्थी का नाम
     </label>
 
 
     <input
         id="studentName"
-        placeholder="Enter your full name"
+        placeholder="Enter your full name / अपना पूरा नाम लिखें"
     >
 
 
-
     <label>
-        Student ID / Roll No.
+        Student ID / Roll No. / विद्यार्थी आईडी
     </label>
 
 
     <input
         id="studentId"
-        placeholder="Example: NDSA-EXCEL-001"
+        placeholder="अपना अनुक्रमांक या स्टूडेंट ID डालें"
     >
-
 
 
     <p class="warn">
 
-        ⚠ Important:
-        Once the exam starts,
-        do not close this window
+        ⚠ Important / महत्वपूर्ण:
+
+        Once the exam starts, do not close this window
         or leave the exam.
 
-    </p>
+        <br>
 
+        परीक्षा शुरू होने के बाद Window बंद न करें।
+
+    </p>
 
 
     <p
@@ -1604,11 +1945,13 @@ button:active{
         "
     >
 
-        ⚡ Practical • Professional •
-        Skill Based Assessment
+        ⚡ Practical • Professional • Skill Based Assessment
+
+        <br>
+
+        व्यावहारिक • प्रोफेशनल • कौशल आधारित परीक्षा
 
     </p>
-
 
 
     <button
@@ -1616,7 +1959,7 @@ button:active{
         onclick="startExam()"
     >
 
-        🚀 START EXAM
+        🚀 START EXAM / परीक्षा शुरू करें
 
     </button>
 
@@ -1629,50 +1972,60 @@ button:active{
      EXAM SCREEN
      ===================================================== -->
 
-<div id="exam"
-     class="card hidden">
+<div
+    id="exam"
+    class="card hidden">
 
 
     <div class="topline">
 
-
         <b id="qno"></b>
 
-
         <b id="answered">
-            Answered: 0/100
+            Answered: 0/75
         </b>
-
 
     </div>
 
 
-
     <div class="progress">
 
-        <div id="bar"
-             class="bar">
+        <div
+            id="bar"
+            class="bar">
         </div>
 
     </div>
 
 
+    <div
+        style="
+        margin-top:12px;
+        color:#64748b;
+        font-size:12px;
+        "
+    >
 
-    <div id="palette"
-         class="palette">
+        🟢 Green = Answered &nbsp; | &nbsp;
+        🔵 Blue = Current Question
+
     </div>
 
 
-
-    <div id="question"
-         class="q">
+    <div
+        id="palette"
+        class="palette">
     </div>
 
+
+    <div
+        id="question"
+        class="q">
+    </div>
 
 
     <div id="options">
     </div>
-
 
 
     <div class="nav">
@@ -1683,10 +2036,9 @@ button:active{
             onclick="prevQ()"
         >
 
-            ← Previous
+            ← Previous / पिछला
 
         </button>
-
 
 
         <button
@@ -1694,13 +2046,12 @@ button:active{
             onclick="nextQ()"
         >
 
-            Next →
+            Next / अगला →
 
         </button>
 
 
     </div>
-
 
 
     <div
@@ -1715,7 +2066,7 @@ button:active{
             onclick="confirmSubmit()"
         >
 
-            SUBMIT EXAM
+            SUBMIT EXAM / परीक्षा जमा करें
 
         </button>
 
@@ -1730,8 +2081,16 @@ button:active{
      RESULT
      ===================================================== -->
 
-<div id="result"
-     class="card result hidden">
+<div
+    id="result"
+    class="card result hidden">
+
+
+    <img
+        src="logo.png"
+        class="resultLogo"
+        alt="Namami Logo"
+    >
 
 
     <h2>
@@ -1743,8 +2102,9 @@ button:active{
     </p>
 
 
-    <div id="rScore"
-         class="score">
+    <div
+        id="rScore"
+        class="score">
     </div>
 
 
@@ -1787,6 +2147,21 @@ button:active{
 
 <div class="footer">
 
+    <img
+         alt="Namami Digital Skills Academy Logo"
+        style="
+        width:58px;
+        height:58px;
+        object-fit:contain;
+        padding:5px;
+        margin-bottom:3px;
+        background:#fff;
+        border:1px solid rgba(23,105,224,.15);
+        border-radius:16px;
+        box-shadow:0 7px 18px rgba(23,105,224,.15);
+        "
+    >
+
     <b>
         NAMAMI DIGITAL SKILLS ACADEMY
     </b>
@@ -1796,6 +2171,10 @@ button:active{
     Sohagpur |
 
     Practical Computer Training
+
+    <br>
+
+    Excel Crash Course • Online Assessment
 
 </div>
 
@@ -1813,238 +2192,826 @@ button:active{
 </script>
 
 
-
 <script>
 
 
 /* =====================================================
-   SUPABASE
+   SAFE SUPABASE INITIALIZATION
+   Exam will work even if database is unavailable.
    ===================================================== */
 
-const supabaseClient =
-    window.supabase.createClient(
+let supabaseClient = null;
 
-        window.SUPABASE_URL,
+try{
 
+    if(
+        window.supabase &&
+        window.SUPABASE_URL &&
         window.SUPABASE_PUBLISHABLE_KEY
+    ){
 
+        supabaseClient =
+            window.supabase.createClient(
+                window.SUPABASE_URL,
+                window.SUPABASE_PUBLISHABLE_KEY
+            );
+
+        console.log(
+            "✅ Supabase connected"
+        );
+
+    }
+    else{
+
+        console.warn(
+            "⚠️ Supabase config not found. Exam will still work."
+        );
+
+    }
+
+}
+catch(error){
+
+    console.error(
+        "Supabase initialization error:",
+        error
     );
 
+}
 
 
 /* =====================================================
    QUESTIONS
+   75 BILINGUAL QUESTIONS
    ===================================================== */
 
 const questions = [
 
-["Which symbol is used to begin a formula in Excel?","=","+","#","@"],
-
-["Which function adds numbers in Excel?","SUM","ADD","TOTAL","PLUS"],
-
-["Which function finds the average?","AVERAGE","MEANVALUE","AVGNUM","MID"],
-
-["Which function returns the largest value?","MAX","HIGH","LARGEVAL","TOP"],
-
-["Which function returns the smallest value?","MIN","LOW","SMALLVAL","BOTTOM"],
-
-["What is the intersection of a row and column called?","Cell","Table","Range","Sheet"],
-
-["Columns in Excel are identified by:","Letters","Numbers","Symbols","Colors"],
-
-["Rows in Excel are identified by:","Numbers","Letters","Symbols","Colors"],
-
-["Which shortcut saves a workbook?","Ctrl + S","Ctrl + P","Ctrl + W","Ctrl + E"],
-
-["Which shortcut opens a workbook?","Ctrl + O","Ctrl + N","Ctrl + B","Ctrl + L"],
-
-["Which shortcut creates a new workbook?","Ctrl + N","Ctrl + O","Ctrl + W","Ctrl + M"],
-
-["Which shortcut prints a worksheet?","Ctrl + P","Ctrl + R","Ctrl + T","Ctrl + Shift + P"],
-
-["Which shortcut copies selected cells?","Ctrl + C","Ctrl + X","Ctrl + V","Ctrl + D"],
-
-["Which shortcut pastes copied data?","Ctrl + V","Ctrl + P","Ctrl + C","Ctrl + A"],
-
-["Which shortcut cuts selected data?","Ctrl + X","Ctrl + C","Ctrl + Z","Ctrl + K"],
-
-["Which shortcut undoes the last action?","Ctrl + Z","Ctrl + Y","Ctrl + U","Ctrl + R"],
-
-["Which shortcut redoes an action?","Ctrl + Y","Ctrl + Z","Ctrl + D","Ctrl + E"],
-
-["What does Ctrl + A usually do?","Select All","Align All","Add All","AutoFill"],
-
-["Which function counts numeric cells?","COUNT","COUNTA","COUNTALL","NUMCOUNT"],
-
-["Which function counts non-empty cells?","COUNTA","COUNT","COUNTIF","CELLCOUNT"],
-
-["Which function counts cells meeting a condition?","COUNTIF","COUNTALL","IFCOUNT","COUNTCELL"],
-
-["Which function adds cells meeting a condition?","SUMIF","ADDIF","TOTALIF","SUMCELL"],
-
-["Which function tests a condition?","IF","CHECK","TEST","CONDITION"],
-
-["Which function looks up data vertically?","VLOOKUP","HLOOKUP","LOOKUPV","VERTLOOK"],
-
-["Which function looks up data horizontally?","HLOOKUP","VLOOKUP","LOOKUPH","HORLOOK"],
-
-["Which function removes extra spaces?","TRIM","SPACE","CLEANSPACE","REMOVE"],
-
-["Which function joins text strings in modern Excel?","TEXTJOIN","TEXTMERGE","JOINSTR","CONCATALL"],
-
-["Which function extracts characters from the left?","LEFT","LFT","START","FIRST"],
-
-["Which function extracts characters from the right?","RIGHT","RGT","END","LAST"],
-
-["Which function extracts characters from the middle?","MID","MIDDLE","CENTER","EXTRACT"],
-
-["What is a group of selected cells called?","Range","Block","AreaOnly","Set"],
-
-["Which feature automatically fills a series?","Fill Handle","Auto Series","Quick Fill","Series Tool"],
-
-["Which feature keeps headings visible while scrolling?","Freeze Panes","Lock Cells","Split Text","Hold Header"],
-
-["Which tool removes duplicate records?","Remove Duplicates","Delete Copy","Unique Delete","Data Clean"],
-
-["Which feature sorts data from A to Z?","Sort A to Z","Filter A to Z","Arrange","Order"],
-
-["Which feature displays only records meeting criteria?","Filter","Sort","Hide","Group"],
-
-["Which tab commonly contains Sort & Filter?","Data","Home","Insert","Review"],
-
-["Which tab contains PivotTable?","Insert","DataOnly","View","Formula"],
-
-["What is a PivotTable mainly used for?","Summarizing data","Typing letters","Formatting pages","Drawing shapes"],
-
-["Which chart is best for showing trends over time?","Line Chart","Pie Chart","Radar Chart","Doughnut Chart"],
-
-["Which chart is useful for parts of a whole?","Pie Chart","Line Chart","Scatter Chart","Stock Chart"],
-
-["Which feature highlights cells based on rules?","Conditional Formatting","Cell Rules Only","Auto Color","Smart Highlight"],
-
-["What does $A$1 represent?","Absolute reference","Relative reference","Mixed reference","Text reference"],
-
-["What does A1 represent?","Relative reference","Absolute reference","Mixed reference","Fixed text"],
-
-["What does $A1 represent?","Mixed reference","Absolute reference","Relative reference","Invalid reference"],
-
-["What does A$1 represent?","Mixed reference","Absolute reference","Relative reference","Invalid reference"],
-
-["Which key edits the active cell?","F2","F4","F7","F12"],
-
-["Which key commonly opens Format Cells?","Ctrl + 1","Ctrl + 2","Ctrl + F1","Alt + 1"],
-
-["Which shortcut applies bold?","Ctrl + B","Ctrl + D","Ctrl + G","Ctrl + H"],
-
-["Which shortcut applies italic?","Ctrl + I","Ctrl + T","Ctrl + K","Ctrl + M"],
-
-["Which shortcut applies underline?","Ctrl + U","Ctrl + L","Ctrl + J","Ctrl + E"],
-
-["Which feature combines selected cells into one?","Merge & Center","Join Cells","Combine","Merge Table"],
-
-["Which alignment centers text?","Center","Middle Only","Central","Align Middle"],
-
-["Which number format displays a percent?","Percentage","Decimal","Scientific","General"],
-
-["Which format displays ₹ values?","Currency/Accounting","Text","Date","Fraction"],
-
-["What is the default file extension for modern Excel workbooks?",".xlsx",".xls",".docx",".csv"],
-
-["Which format is commonly used for macro-enabled workbooks?",".xlsm",".xlsx",".xltx",".csv"],
-
-["What does CSV stand for?","Comma-Separated Values","Cell-Separated Values","Column Saved Values","Common Sheet Values"],
-
-["Which tool can split text into multiple columns?","Text to Columns","Split Cells","Column Break","Text Divide"],
-
-["Which modern Excel function splits text into columns/rows?","TEXTSPLIT","SPLITTEXT","TEXTDIVIDE","DIVIDETEXT"],
-
-["Which function returns today's date?","TODAY","DATE","NOWDATE","CURRENT"],
-
-["Which function returns current date and time?","NOW","TODAYTIME","CURRENTDT","TIME"],
-
-["Which function rounds a number?","ROUND","RNDNUM","NEAREST","FIX"],
-
-["Which function returns the remainder after division?","MOD","REMAINDER","REST","DIVREM"],
-
-["Which function returns a random number?","RAND","RANDOM","RND","RAN"],
-
-["Which function returns a random integer in a range?","RANDBETWEEN","RANDINT","RANGEAND","RANDOMINT"],
-
-["Which function converts text to uppercase?","UPPER","CAPITAL","UPTEXT","BIG"],
-
-["Which function converts text to lowercase?","LOWER","SMALL","LOWTEXT","MIN"],
-
-["Which function capitalizes the first letter of each word?","PROPER","TITLE","CAPSWORDS","WORDCAP"],
-
-["Which function finds the position of text?","FIND","POSITION","LOCATE","SEARCHPOS"],
-
-["Which function can search text without case sensitivity?","SEARCH","FIND","LOCATE","TEXTSEARCH"],
-
-["Which function returns a value from a specified position?","INDEX","POSITION","RETURN","GET"],
-
-["Which function finds a position in a range?","MATCH","FINDPOS","POSITION","LOCATE"],
-
-["Which modern lookup function can look left or right?","XLOOKUP","VLOOKUP","LOOKUPX","XL"],
-
-["Which function can combine arrays vertically?","VSTACK","STACKV","VERTSTACK","ARRAYDOWN"],
-
-["Which function can combine arrays horizontally?","HSTACK","STACKH","HORIZSTACK","ARRAYRIGHT"],
-
-["Which Excel feature imports and transforms data?","Power Query","Power Pivot Only","Data Wizard","Query Tool"],
-
-["Power Query is mainly used for:","Data transformation","Slide design","Typing","Printing"],
-
-["Which language is used by Power Query?","M","VBA","DAX","SQL"],
-
-["Which language is commonly used in Excel macros?","VBA","M","DAX","HTML"],
-
-["What does VBA stand for?","Visual Basic for Applications","Visual Business Automation","Virtual Basic Application","Visual Binary Access"],
-
-["Which feature records repetitive actions using macros?","Macro Recorder","Action Recorder","Task Record","VBA Recorder"],
-
-["Which tool creates interactive summaries from large datasets?","PivotTable","WordArt","SmartArt","Page Break"],
-
-["Which command removes blank rows/values during Power Query cleaning?","Remove Rows","Delete Pages","Clear Sheet","Erase Data"],
-
-["What does Ctrl + F do?","Find","Format","Filter","Fill"],
-
-["What does Ctrl + H do?","Replace","Hide","Highlight","Help"],
-
-["Which shortcut opens Format Cells?","Ctrl + 1","Ctrl + F","Ctrl + Shift + 1","Alt + F"],
-
-["Which shortcut inserts current date?","Ctrl + ;","Ctrl + :","Alt + ;","Ctrl + D"],
-
-["Which shortcut inserts current time?","Ctrl + Shift + ;","Ctrl + T","Alt + Shift + T","Ctrl + :"],
-
-["Which function handles errors by returning an alternative value?","IFERROR","ERRORIF","HANDLEERROR","IFERR"],
-
-["Which operator means 'not equal to' in Excel?","<>","!=","≠=","><"],
-
-["Which operator means greater than or equal to?",">=","=>","=>=","GTE"],
-
-["Which function creates a subtotal that can ignore filtered rows?","SUBTOTAL","TOTAL","FILTERSUM","SUMVISIBLE"],
-
-["Which feature can prevent users from editing cells?","Protect Sheet","Lock Workbook Only","Edit Guard","Cell Lock Tool"],
-
-["Which feature can restrict invalid data entry?","Data Validation","Input Control","Cell Rules","Entry Filter"],
-
-["Which feature creates drop-down lists?","Data Validation","Filter","Form Control Only","Sort"],
-
-["Which area shows the active cell's contents/formula?","Formula Bar","Status Bar","Name Box","Ribbon"],
-
-["Which box displays the active cell address?","Name Box","Formula Bar","Status Box","Address Bar"],
-
-["Which shortcut opens the Go To dialog?","Ctrl + G","Ctrl + J","Ctrl + T","Ctrl + Q"],
-
-["Which shortcut selects an entire column?","Ctrl + Space","Shift + Space","Alt + Space","Ctrl + C"],
-
-["Which shortcut selects an entire row?","Shift + Space","Ctrl + Space","Alt + Space","Shift + R"],
-
-["Which key starts a new line inside a cell?","Alt + Enter","Ctrl + Enter","Shift + Enter","F2 + Enter"],
-
-["Which feature is useful for creating dashboards?","Charts, PivotTables & Slicers","WordArt only","Page Layout","Comments"]
+/* 1 */
+[
+    "Which symbol is used to begin a formula in Excel?",
+    "Excel में Formula शुरू करने के लिए किस symbol का उपयोग किया जाता है?",
+    "=",
+    "+",
+    "#",
+    "@"
+],
+
+/* 2 */
+[
+    "Which function adds numbers in Excel?",
+    "Excel में numbers को जोड़ने के लिए कौन-सा function उपयोग होता है?",
+    "SUM",
+    "ADD",
+    "TOTAL",
+    "PLUS"
+],
+
+/* 3 */
+[
+    "Which function finds the average of numbers?",
+    "Numbers का average निकालने के लिए कौन-सा function उपयोग होता है?",
+    "AVERAGE",
+    "MEANVALUE",
+    "AVGNUM",
+    "MID"
+],
+
+/* 4 */
+[
+    "Which function returns the largest value?",
+    "सबसे बड़ी value निकालने के लिए कौन-सा function उपयोग होता है?",
+    "MAX",
+    "HIGH",
+    "LARGEVAL",
+    "TOP"
+],
+
+/* 5 */
+[
+    "Which function returns the smallest value?",
+    "सबसे छोटी value निकालने के लिए कौन-सा function उपयोग होता है?",
+    "MIN",
+    "LOW",
+    "SMALLVAL",
+    "BOTTOM"
+],
+
+/* 6 */
+[
+    "What is the intersection of a row and column called?",
+    "Row और Column के intersection को क्या कहा जाता है?",
+    "Cell",
+    "Table",
+    "Range",
+    "Sheet"
+],
+
+/* 7 */
+[
+    "Columns in Excel are identified by:",
+    "Excel में Columns की पहचान किससे होती है?",
+    "Letters",
+    "Numbers",
+    "Symbols",
+    "Colors"
+],
+
+/* 8 */
+[
+    "Rows in Excel are identified by:",
+    "Excel में Rows की पहचान किससे होती है?",
+    "Numbers",
+    "Letters",
+    "Symbols",
+    "Colors"
+],
+
+/* 9 */
+[
+    "Which shortcut saves a workbook?",
+    "Workbook को save करने की shortcut key कौन-सी है?",
+    "Ctrl + S",
+    "Ctrl + P",
+    "Ctrl + W",
+    "Ctrl + E"
+],
+
+/* 10 */
+[
+    "Which shortcut opens an existing workbook?",
+    "Existing workbook खोलने की shortcut key कौन-सी है?",
+    "Ctrl + O",
+    "Ctrl + N",
+    "Ctrl + B",
+    "Ctrl + L"
+],
+
+/* 11 */
+[
+    "Which shortcut creates a new workbook?",
+    "New workbook बनाने की shortcut key कौन-सी है?",
+    "Ctrl + N",
+    "Ctrl + O",
+    "Ctrl + W",
+    "Ctrl + M"
+],
+
+/* 12 */
+[
+    "Which shortcut prints a worksheet?",
+    "Worksheet print करने की shortcut key कौन-सी है?",
+    "Ctrl + P",
+    "Ctrl + R",
+    "Ctrl + T",
+    "Ctrl + Shift + P"
+],
+
+/* 13 */
+[
+    "Which shortcut copies selected cells?",
+    "Selected cells को copy करने की shortcut key कौन-सी है?",
+    "Ctrl + C",
+    "Ctrl + X",
+    "Ctrl + V",
+    "Ctrl + D"
+],
+
+/* 14 */
+[
+    "Which shortcut pastes copied data?",
+    "Copied data को paste करने की shortcut key कौन-सी है?",
+    "Ctrl + V",
+    "Ctrl + P",
+    "Ctrl + C",
+    "Ctrl + A"
+],
+
+/* 15 */
+[
+    "Which shortcut cuts selected data?",
+    "Selected data को cut करने की shortcut key कौन-सी है?",
+    "Ctrl + X",
+    "Ctrl + C",
+    "Ctrl + Z",
+    "Ctrl + K"
+],
+
+/* 16 */
+[
+    "Which shortcut undoes the last action?",
+    "Last action को undo करने की shortcut key कौन-सी है?",
+    "Ctrl + Z",
+    "Ctrl + Y",
+    "Ctrl + U",
+    "Ctrl + R"
+],
+
+/* 17 */
+[
+    "Which shortcut redoes an action?",
+    "Action को redo करने की shortcut key कौन-सी है?",
+    "Ctrl + Y",
+    "Ctrl + Z",
+    "Ctrl + D",
+    "Ctrl + E"
+],
+
+/* 18 */
+[
+    "What does Ctrl + A usually do?",
+    "Ctrl + A सामान्यतः क्या करता है?",
+    "Select All",
+    "Align All",
+    "Add All",
+    "AutoFill"
+],
+
+/* 19 */
+[
+    "Which function counts numeric cells?",
+    "Numeric cells को count करने के लिए कौन-सा function उपयोग होता है?",
+    "COUNT",
+    "COUNTA",
+    "COUNTALL",
+    "NUMCOUNT"
+],
+
+/* 20 */
+[
+    "Which function counts non-empty cells?",
+    "Non-empty cells को count करने के लिए कौन-सा function उपयोग होता है?",
+    "COUNTA",
+    "COUNT",
+    "COUNTIF",
+    "CELLCOUNT"
+],
+
+/* 21 */
+[
+    "Which function counts cells meeting a condition?",
+    "Condition को पूरा करने वाले cells को count करने के लिए कौन-सा function है?",
+    "COUNTIF",
+    "COUNTALL",
+    "IFCOUNT",
+    "COUNTCELL"
+],
+
+/* 22 */
+[
+    "Which function adds cells meeting a condition?",
+    "Condition को पूरा करने वाली values को जोड़ने के लिए कौन-सा function है?",
+    "SUMIF",
+    "ADDIF",
+    "TOTALIF",
+    "SUMCELL"
+],
+
+/* 23 */
+[
+    "Which function tests a condition?",
+    "Condition को test करने के लिए कौन-सा function उपयोग होता है?",
+    "IF",
+    "CHECK",
+    "TEST",
+    "CONDITION"
+],
+
+/* 24 */
+[
+    "Which function looks up data vertically?",
+    "Data को vertically lookup करने के लिए कौन-सा function उपयोग होता है?",
+    "VLOOKUP",
+    "HLOOKUP",
+    "LOOKUPV",
+    "VERTLOOK"
+],
+
+/* 25 */
+[
+    "Which function looks up data horizontally?",
+    "Data को horizontally lookup करने के लिए कौन-सा function उपयोग होता है?",
+    "HLOOKUP",
+    "VLOOKUP",
+    "LOOKUPH",
+    "HORLOOK"
+],
+
+/* 26 */
+[
+    "Which function removes extra spaces from text?",
+    "Text में extra spaces हटाने के लिए कौन-सा function उपयोग होता है?",
+    "TRIM",
+    "SPACE",
+    "CLEANSPACE",
+    "REMOVE"
+],
+
+/* 27 */
+[
+    "Which function joins text strings in modern Excel?",
+    "Modern Excel में text strings को join करने के लिए कौन-सा function है?",
+    "TEXTJOIN",
+    "TEXTMERGE",
+    "JOINSTR",
+    "CONCATALL"
+],
+
+/* 28 */
+[
+    "Which function extracts characters from the left side?",
+    "Text के left side से characters निकालने के लिए कौन-सा function है?",
+    "LEFT",
+    "LFT",
+    "START",
+    "FIRST"
+],
+
+/* 29 */
+[
+    "Which function extracts characters from the right side?",
+    "Text के right side से characters निकालने के लिए कौन-सा function है?",
+    "RIGHT",
+    "RGT",
+    "END",
+    "LAST"
+],
+
+/* 30 */
+[
+    "Which function extracts characters from the middle?",
+    "Text के बीच से characters निकालने के लिए कौन-सा function है?",
+    "MID",
+    "MIDDLE",
+    "CENTER",
+    "EXTRACT"
+],
+
+/* 31 */
+[
+    "What is a group of selected cells called?",
+    "Selected cells के group को क्या कहा जाता है?",
+    "Range",
+    "Block",
+    "AreaOnly",
+    "Set"
+],
+
+/* 32 */
+[
+    "Which feature automatically fills a series?",
+    "Series को automatically fill करने के लिए कौन-सा feature है?",
+    "Fill Handle",
+    "Auto Series",
+    "Quick Fill",
+    "Series Tool"
+],
+
+/* 33 */
+[
+    "Which feature keeps headings visible while scrolling?",
+    "Scrolling करते समय headings को visible रखने के लिए कौन-सा feature है?",
+    "Freeze Panes",
+    "Lock Cells",
+    "Split Text",
+    "Hold Header"
+],
+
+/* 34 */
+[
+    "Which tool removes duplicate records?",
+    "Duplicate records हटाने के लिए कौन-सा tool है?",
+    "Remove Duplicates",
+    "Delete Copy",
+    "Unique Delete",
+    "Data Clean"
+],
+
+/* 35 */
+[
+    "Which feature sorts data from A to Z?",
+    "Data को A से Z तक sort करने के लिए कौन-सा feature है?",
+    "Sort A to Z",
+    "Filter A to Z",
+    "Arrange",
+    "Order"
+],
+
+/* 36 */
+[
+    "Which feature displays only records meeting criteria?",
+    "केवल criteria पूरा करने वाले records दिखाने के लिए कौन-सा feature है?",
+    "Filter",
+    "Sort",
+    "Hide",
+    "Group"
+],
+
+/* 37 */
+[
+    "Which tab commonly contains Sort & Filter?",
+    "Sort & Filter सामान्यतः किस tab में होते हैं?",
+    "Data",
+    "Home",
+    "Insert",
+    "Review"
+],
+
+/* 38 */
+[
+    "Which tab contains PivotTable?",
+    "PivotTable किस tab में मिलता है?",
+    "Insert",
+    "Data",
+    "View",
+    "Formula"
+],
+
+/* 39 */
+[
+    "What is a PivotTable mainly used for?",
+    "PivotTable का मुख्य उपयोग किसके लिए किया जाता है?",
+    "Summarizing data",
+    "Typing letters",
+    "Formatting pages",
+    "Drawing shapes"
+],
+
+/* 40 */
+[
+    "Which chart is best for showing trends over time?",
+    "Time के साथ trends दिखाने के लिए कौन-सा chart अच्छा है?",
+    "Line Chart",
+    "Pie Chart",
+    "Radar Chart",
+    "Doughnut Chart"
+],
+
+/* 41 */
+[
+    "Which chart is useful for showing parts of a whole?",
+    "Whole के parts दिखाने के लिए कौन-सा chart उपयोगी है?",
+    "Pie Chart",
+    "Line Chart",
+    "Scatter Chart",
+    "Stock Chart"
+],
+
+/* 42 */
+[
+    "Which feature highlights cells based on rules?",
+    "Rules के आधार पर cells को highlight करने के लिए कौन-सा feature है?",
+    "Conditional Formatting",
+    "Cell Rules Only",
+    "Auto Color",
+    "Smart Highlight"
+],
+
+/* 43 */
+[
+    "What does $A$1 represent?",
+    "$A$1 किस प्रकार का cell reference है?",
+    "Absolute reference",
+    "Relative reference",
+    "Mixed reference",
+    "Text reference"
+],
+
+/* 44 */
+[
+    "What does A1 represent?",
+    "A1 किस प्रकार का cell reference है?",
+    "Relative reference",
+    "Absolute reference",
+    "Mixed reference",
+    "Fixed text"
+],
+
+/* 45 */
+[
+    "What does $A1 represent?",
+    "$A1 किस प्रकार का cell reference है?",
+    "Mixed reference",
+    "Absolute reference",
+    "Relative reference",
+    "Invalid reference"
+],
+
+/* 46 */
+[
+    "What does A$1 represent?",
+    "A$1 किस प्रकार का cell reference है?",
+    "Mixed reference",
+    "Absolute reference",
+    "Relative reference",
+    "Invalid reference"
+],
+
+/* 47 */
+[
+    "Which key edits the active cell?",
+    "Active cell को edit करने के लिए कौन-सी key उपयोग होती है?",
+    "F2",
+    "F4",
+    "F7",
+    "F12"
+],
+
+/* 48 */
+[
+    "Which shortcut commonly opens Format Cells?",
+    "Format Cells खोलने की shortcut key कौन-सी है?",
+    "Ctrl + 1",
+    "Ctrl + 2",
+    "Ctrl + F1",
+    "Alt + 1"
+],
+
+/* 49 */
+[
+    "Which shortcut applies Bold?",
+    "Bold लगाने की shortcut key कौन-सी है?",
+    "Ctrl + B",
+    "Ctrl + D",
+    "Ctrl + G",
+    "Ctrl + H"
+],
+
+/* 50 */
+[
+    "Which shortcut applies Italic?",
+    "Italic लगाने की shortcut key कौन-सी है?",
+    "Ctrl + I",
+    "Ctrl + T",
+    "Ctrl + K",
+    "Ctrl + M"
+],
+
+/* 51 */
+[
+    "Which shortcut applies Underline?",
+    "Underline लगाने की shortcut key कौन-सी है?",
+    "Ctrl + U",
+    "Ctrl + L",
+    "Ctrl + J",
+    "Ctrl + E"
+],
+
+/* 52 */
+[
+    "Which feature combines selected cells into one?",
+    "Selected cells को एक cell में combine करने के लिए कौन-सा feature है?",
+    "Merge & Center",
+    "Join Cells",
+    "Combine",
+    "Merge Table"
+],
+
+/* 53 */
+[
+    "Which alignment centers text?",
+    "Text को center करने के लिए कौन-सा alignment है?",
+    "Center",
+    "Middle Only",
+    "Central",
+    "Align Middle"
+],
+
+/* 54 */
+[
+    "Which number format displays a percentage?",
+    "Percentage दिखाने के लिए कौन-सा number format है?",
+    "Percentage",
+    "Decimal",
+    "Scientific",
+    "General"
+],
+
+/* 55 */
+[
+    "Which format is suitable for displaying ₹ values?",
+    "₹ values दिखाने के लिए कौन-सा format suitable है?",
+    "Currency/Accounting",
+    "Text",
+    "Date",
+    "Fraction"
+],
+
+/* 56 */
+[
+    "What is the default file extension for modern Excel workbooks?",
+    "Modern Excel workbook की default file extension क्या है?",
+    ".xlsx",
+    ".xls",
+    ".docx",
+    ".csv"
+],
+
+/* 57 */
+[
+    "Which format is commonly used for macro-enabled workbooks?",
+    "Macro-enabled workbook के लिए कौन-सा format उपयोग होता है?",
+    ".xlsm",
+    ".xlsx",
+    ".xltx",
+    ".csv"
+],
+
+/* 58 */
+[
+    "What does CSV stand for?",
+    "CSV का full form क्या है?",
+    "Comma-Separated Values",
+    "Cell-Separated Values",
+    "Column Saved Values",
+    "Common Sheet Values"
+],
+
+/* 59 */
+[
+    "Which tool can split text into multiple columns?",
+    "Text को multiple columns में split करने के लिए कौन-सा tool है?",
+    "Text to Columns",
+    "Split Cells",
+    "Column Break",
+    "Text Divide"
+],
+
+/* 60 */
+[
+    "Which modern Excel function splits text into columns or rows?",
+    "Modern Excel में text को columns या rows में split करने वाला function कौन-सा है?",
+    "TEXTSPLIT",
+    "SPLITTEXT",
+    "TEXTDIVIDE",
+    "DIVIDETEXT"
+],
+
+/* 61 */
+[
+    "Which function returns today's date?",
+    "आज की date return करने वाला function कौन-सा है?",
+    "TODAY",
+    "DATE",
+    "NOWDATE",
+    "CURRENT"
+],
+
+/* 62 */
+[
+    "Which function returns current date and time?",
+    "Current date और time return करने वाला function कौन-सा है?",
+    "NOW",
+    "TODAYTIME",
+    "CURRENTDT",
+    "TIME"
+],
+
+/* 63 */
+[
+    "Which function rounds a number?",
+    "Number को round करने के लिए कौन-सा function है?",
+    "ROUND",
+    "RNDNUM",
+    "NEAREST",
+    "FIX"
+],
+
+/* 64 */
+[
+    "Which function returns the remainder after division?",
+    "Division के बाद remainder निकालने वाला function कौन-सा है?",
+    "MOD",
+    "REMAINDER",
+    "REST",
+    "DIVREM"
+],
+
+/* 65 */
+[
+    "Which function returns a random number?",
+    "Random number generate करने वाला function कौन-सा है?",
+    "RAND",
+    "RANDOM",
+    "RND",
+    "RAN"
+],
+
+/* 66 */
+[
+    "Which function returns a random integer in a range?",
+    "एक range के बीच random integer देने वाला function कौन-सा है?",
+    "RANDBETWEEN",
+    "RANDINT",
+    "RANGEAND",
+    "RANDOMINT"
+],
+
+/* 67 */
+[
+    "Which function converts text to uppercase?",
+    "Text को uppercase में बदलने वाला function कौन-सा है?",
+    "UPPER",
+    "CAPITAL",
+    "UPTEXT",
+    "BIG"
+],
+
+/* 68 */
+[
+    "Which function converts text to lowercase?",
+    "Text को lowercase में बदलने वाला function कौन-सा है?",
+    "LOWER",
+    "SMALL",
+    "LOWTEXT",
+    "MIN"
+],
+
+/* 69 */
+[
+    "Which function capitalizes the first letter of each word?",
+    "हर word के first letter को capital करने वाला function कौन-सा है?",
+    "PROPER",
+    "TITLE",
+    "CAPSWORDS",
+    "WORDCAP"
+],
+
+/* 70 */
+[
+    "Which function searches text without case sensitivity?",
+    "Case sensitivity के बिना text search करने वाला function कौन-सा है?",
+    "SEARCH",
+    "FIND",
+    "LOCATE",
+    "TEXTSEARCH"
+],
+
+/* 71 */
+[
+    "Which modern lookup function can look left or right?",
+    "Modern Excel में left या right दोनों तरफ lookup करने वाला function कौन-सा है?",
+    "XLOOKUP",
+    "VLOOKUP",
+    "LOOKUPX",
+    "XL"
+],
+
+/* 72 */
+[
+    "Which Excel feature imports and transforms data?",
+    "Excel में data import और transform करने के लिए कौन-सा feature है?",
+    "Power Query",
+    "Power Pivot Only",
+    "Data Wizard",
+    "Query Tool"
+],
+
+/* 73 */
+[
+    "Power Query is mainly used for:",
+    "Power Query का मुख्य उपयोग किसके लिए किया जाता है?",
+    "Data transformation",
+    "Slide design",
+    "Typing",
+    "Printing"
+],
+
+/* 74 */
+[
+    "Which language is used by Power Query?",
+    "Power Query में कौन-सी language उपयोग होती है?",
+    "M",
+    "VBA",
+    "DAX",
+    "SQL"
+],
+
+/* 75 */
+[
+    "Which language is commonly used in Excel macros?",
+    "Excel Macros में सामान्यतः कौन-सी language उपयोग होती है?",
+    "VBA",
+    "M",
+    "DAX",
+    "HTML"
+]
 
 ];
+
+
+/* =====================================================
+   VERIFY QUESTION COUNT
+   ===================================================== */
+
+if(questions.length !== 75){
+
+    console.error(
+        "Question count error:",
+        questions.length
+    );
+
+}
 
 
 /* =====================================================
@@ -2054,9 +3021,10 @@ const questions = [
 let q = 0;
 
 let answers =
-    Array(questions.length).fill(null);
+    Array(questions.length)
+    .fill(null);
 
-let seconds = 3600;
+let seconds = 75 * 60;
 
 let timerInt = null;
 
@@ -2096,7 +3064,7 @@ function startExam(){
     if(!student || !studentId){
 
         alert(
-            "Please enter Student Name and Student ID."
+            "Please enter Student Name and Student ID.\n\nकृपया Student Name और Student ID भरें।"
         );
 
         return;
@@ -2140,6 +3108,10 @@ function startExam(){
 
                 clearInterval(timerInt);
 
+                alert(
+                    "Time is over. Your exam will be submitted automatically.\n\nसमय समाप्त हो गया है। आपका exam automatically submit होगा।"
+                );
+
                 submitExam(true);
 
             }
@@ -2174,8 +3146,6 @@ function updateTimer(){
         String(s).padStart(2,"0");
 
 
-    /* Timer warning */
-
     if(seconds <= 300){
 
         document
@@ -2205,7 +3175,8 @@ function buildPalette(){
     questions.forEach((_,i)=>{
 
         let b =
-            document.createElement("button");
+            document
+            .createElement("button");
 
 
         b.className =
@@ -2218,6 +3189,10 @@ function buildPalette(){
 
         b.textContent =
             i + 1;
+
+
+        b.type =
+            "button";
 
 
         b.onclick =
@@ -2267,8 +3242,17 @@ function render(){
         .getElementById("question");
 
 
-    questionBox.textContent =
-        item[0];
+    questionBox.innerHTML =
+
+        `
+        <span class="en">
+            ${item[0]}
+        </span>
+
+        <span class="hi">
+            ${item[1]}
+        </span>
+        `;
 
 
     questionBox.animate(
@@ -2304,7 +3288,7 @@ function render(){
     o.innerHTML = "";
 
 
-    for(let i=1;i<5;i++){
+    for(let i=2;i<6;i++){
 
         let lab =
             document
@@ -2321,20 +3305,24 @@ function render(){
         <input
             type="radio"
             name="opt"
-            value="${i}"
-            ${answers[q]===i
+            value="${i-1}"
+            ${answers[q]===i-1
                 ?"checked"
                 :""
             }
         >
 
-        <b>
-            ${labels[i-1]}.
+        <b style="margin-right:7px;">
+            ${labels[i-2]}.
         </b>
 
-        &nbsp;
+        <div class="optText">
 
-        ${item[i]}
+            <span>
+                ${item[i]}
+            </span>
+
+        </div>
         `;
 
 
@@ -2463,7 +3451,7 @@ function nextQ(){
     else{
 
         alert(
-            "This is the last question."
+            "This is the last question.\n\nयह अंतिम प्रश्न है।"
         );
 
     }
@@ -2513,7 +3501,7 @@ function confirmSubmit(){
 
     if(
         !confirm(
-            `Submit exam now? ${unanswered} question(s) are unanswered.`
+            `Submit exam now?\n\nUnanswered Questions: ${unanswered}\n\nक्या आप exam submit करना चाहते हैं?`
         )
     )
         return;
@@ -2526,9 +3514,24 @@ function confirmSubmit(){
 
 /* =====================================================
    SAVE RESULT TO SUPABASE
+   SAFE VERSION
    ===================================================== */
 
 async function saveExamResult(data){
+
+    if(!supabaseClient){
+
+        console.warn(
+            "Supabase unavailable. Result not saved online."
+        );
+
+        return {
+            ok:false,
+            error:"Supabase not configured"
+        };
+
+    }
+
 
     try{
 
@@ -2609,9 +3612,9 @@ async function submitExam(auto=false){
 
                 &&
 
-                questions[i][a]
+                questions[i][a + 1]
                 ===
-                questions[i][1]
+                questions[i][2]
 
             ){
 
@@ -2653,7 +3656,7 @@ async function submitExam(auto=false){
 
     const result =
 
-        correct >= 40
+        correct >= 30
         ?
         "PASS"
         :
@@ -2667,12 +3670,15 @@ async function submitExam(auto=false){
         ?
 
         Math.min(
-            7200,
+
+            4500,
 
             Math.max(
+
                 0,
 
                 Math.round(
+
                     (
                         Date.now()
                         -
@@ -2680,13 +3686,16 @@ async function submitExam(auto=false){
                     )
                     /
                     1000
+
                 )
+
             )
+
         )
 
         :
 
-        3600 - seconds;
+        4500 - seconds;
 
 
     const examId =
@@ -2739,7 +3748,7 @@ async function submitExam(auto=false){
         .getElementById("rStudent")
         .textContent =
 
-        `Student:
+        `Student / विद्यार्थी:
         ${student}
         |
         ID:
@@ -2761,7 +3770,7 @@ async function submitExam(auto=false){
         .getElementById("rPercent")
         .textContent =
 
-        `Percentage: ${pct}%`;
+        `Percentage / प्रतिशत: ${pct}%`;
 
 
     /* Correct */
@@ -2770,7 +3779,7 @@ async function submitExam(auto=false){
         .getElementById("rCorrect")
         .textContent =
 
-        `Correct Answers: ${correct}`;
+        `Correct Answers / सही उत्तर: ${correct}`;
 
 
     /* Wrong */
@@ -2779,9 +3788,9 @@ async function submitExam(auto=false){
         .getElementById("rWrong")
         .textContent =
 
-        `Wrong Answers: ${wrong}
+        `Wrong Answers / गलत उत्तर: ${wrong}
         |
-        Unanswered: ${unanswered}`;
+        Unanswered / अनुत्तरित: ${unanswered}`;
 
 
     /* Result */
@@ -2802,6 +3811,8 @@ async function submitExam(auto=false){
             "
         >
             🎉 RESULT: PASS
+            <br>
+            उत्तीर्ण
         </b>
         `
 
@@ -2815,6 +3826,8 @@ async function submitExam(auto=false){
             "
         >
             ❌ RESULT: FAIL
+            <br>
+            अनुत्तीर्ण
         </b>
         `;
 
@@ -2830,7 +3843,7 @@ async function submitExam(auto=false){
 
 
     saveBox.textContent =
-        "⏳ Saving result...";
+        "⏳ Saving result... / Result save हो रहा है...";
 
 
     document
@@ -2850,7 +3863,7 @@ async function submitExam(auto=false){
         await saveExamResult({
 
             exam_name:
-                "Excel Crash Course",
+                "Excel Crash Course - 75 MCQ",
 
             student_name:
                 student,
@@ -2895,7 +3908,7 @@ async function submitExam(auto=false){
 
         :
 
-        "⚠️ Result could not be saved. Please inform the teacher.";
+        "⚠️ Online result saving unavailable. Please inform the teacher.";
 
 
     saveBox.style.fontWeight =
@@ -2915,15 +3928,8 @@ async function submitExam(auto=false){
 
 /* =====================================================
    EXAM LOCKDOWN
-   ===================================================== */
-
-/*
-   NOTE:
    Browser-level lockdown is limited by browser security.
-   These controls prevent common shortcut/context-menu
-   actions during the exam.
-*/
-
+   ===================================================== */
 
 document.addEventListener(
     "contextmenu",
@@ -2995,6 +4001,30 @@ document.addEventListener(
 
     }
 
+);
+
+
+/* =====================================================
+   ENTER KEY ON LOGIN
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "Enter" &&
+            !document
+                .getElementById("start")
+                .classList
+                .contains("hidden")
+        ){
+
+            startExam();
+
+        }
+
+    }
 );
 
 </script>
