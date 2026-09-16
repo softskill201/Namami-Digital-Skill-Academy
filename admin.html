@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+Namami Digital Skills Academy - Teacher Result Panel
+</title>
+
+<style>
+
+:root{
+    --navy:#071a33;
+    --navy2:#0c3b70;
+    --blue:#1769e0;
+    --cyan:#00b8d9;
+    --green:#10b981;
+    --red:#ef4444;
+    --orange:#f59e0b;
+    --white:#ffffff;
+    --bg:#eef5fc;
+    --text:#172033;
+    --muted:#64748b;
+    --border:#dbe5f0;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        "Noto Sans Devanagari",
+        sans-serif;
+
+    color:var(--text);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0,184,217,.15),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(23,105,224,.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #edf6ff,
+            #f8fafc,
+            #eefcf7
+        );
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px 25px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            120deg,
+            #071a33,
+            #0c3b70,
+            #1769e0
+        );
+
+    box-shadow:
+        0 8px 30px
+        rgba(4,31,61,.25);
+}
+
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+
+.logo{
+
+    width:52px;
+
+    height:52px;
+
+    object-fit:contain;
+
+    padding:5px;
+
+    background:#fff;
+
+    border-radius:12px;
+}
+
+
+.header h1{
+
+    margin:0;
+
+    font-size:21px;
+
+    font-weight:900;
+}
+
+
+.header small{
+
+    display:block;
+
+    margin-top:4px;
+
+    opacity:.9;
+}
+
+
+/* =====================================================
+   CONTAINER
+   ===================================================== */
+
+.container{
+
+    max-width:1400px;
+
+    margin:25px auto;
+
+    padding:0 16px;
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+.login-card{
+
+    max-width:450px;
+
+    margin:
+        70px auto;
+
+    padding:35px;
+
+    text-align:center;
+
+    background:
+        rgba(255,255,255,.95);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 18px 55px
+        rgba(24,52,84,.15);
+}
+
+
+.login-logo{
+
+    width:100px;
+
+    height:100px;
+
+    object-fit:contain;
+
+    padding:10px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 8px 22px
+        rgba(23,105,224,.15);
+}
+
+
+.login-card h2{
+
+    color:var(--navy);
+
+    margin:
+        15px 0 5px;
+
+    font-size:27px;
+}
+
+
+.login-card p{
+
+    color:var(--muted);
+
+    margin-bottom:25px;
+}
+
+
+label{
+
+    display:block;
+
+    text-align:left;
+
+    font-weight:700;
+
+    margin-top:15px;
+}
+
+
+input,
+select{
+
+    width:100%;
+
+    padding:13px 14px;
+
+    margin-top:7px;
+
+    border:
+        1px solid
+        #cbd7e5;
+
+    border-radius:11px;
+
+    outline:none;
+
+    font-size:15px;
+
+    background:#fff;
+}
+
+
+input:focus,
+select:focus{
+
+    border-color:
+        var(--blue);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(23,105,224,.10);
+}
+
+
+button{
+
+    border:0;
+
+    border-radius:10px;
+
+    padding:11px 17px;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+button:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(0,0,0,.12);
+}
+
+
+.primary{
+
+    width:100%;
+
+    margin-top:20px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1769e0,
+            #0b4da8
+        );
+}
+
+
+.hidden{
+
+    display:none !important;
+}
+
+
+.error{
+
+    margin-top:15px;
+
+    padding:10px;
+
+    color:#b42318;
+
+    background:#fff1f1;
+
+    border-radius:9px;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+
+/* =====================================================
+   DASHBOARD
+   ===================================================== */
+
+.dashboard-title{
+
+    margin-bottom:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+
+.dashboard-title h2{
+
+    margin:0;
+
+    color:var(--navy);
+
+    font-size:28px;
+}
+
+
+.dashboard-title p{
+
+    margin:5px 0 0;
+
+    color:var(--muted);
+}
+
+
+.actions{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+
+.refresh{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #07865e
+        );
+}
+
+
+.csv{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #d97706
+        );
+}
+
+
+.logout{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #b91c1c
+        );
+}
+
+
+/* =====================================================
+   STATS
+   ===================================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+
+.stat{
+
+    padding:20px;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border-radius:17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+
+    box-shadow:
+        0 8px 25px
+        rgba(24,52,84,.08);
+}
+
+
+.stat-title{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+.stat-value{
+
+    margin-top:7px;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    color:var(--blue);
+}
+
+
+.stat.pass .stat-value{
+
+    color:#07865e;
+}
+
+
+.stat.fail .stat-value{
+
+    color:#b91c1c;
+}
+
+
+.stat.average .stat-value{
+
+    color:#d97706;
+}
+
+
+/* =====================================================
+   FILTERS
+   ===================================================== */
+
+.filters{
+
+    display:grid;
+
+    grid-template-columns:
+        2fr 1fr;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+    padding:18px;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border-radius:17px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(24,52,84,.07);
+}
+
+
+/* =====================================================
+   TABLE
+   ===================================================== */
+
+.table-card{
+
+    background:
+        rgba(255,255,255,.96);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 35px
+        rgba(24,52,84,.10);
+}
+
+
+.table-head{
+
+    padding:16px 18px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            120deg,
+            #071a33,
+            #1769e0
+        );
+
+    font-weight:800;
+}
+
+
+.table-wrap{
+
+    width:100%;
+
+    overflow-x:auto;
+}
+
+
+table{
+
+    width:100%;
+
+    min-width:1050px;
+
+    border-collapse:collapse;
+}
+
+
+th{
+
+    padding:13px 10px;
+
+    text-align:left;
+
+    color:#fff;
+
+    background:#0c3b70;
+
+    font-size:13px;
+
+    white-space:nowrap;
+}
+
+
+td{
+
+    padding:12px 10px;
+
+    border-bottom:
+        1px solid
+        #e7edf4;
+
+    font-size:13px;
+
+    white-space:nowrap;
+}
+
+
+tr:hover td{
+
+    background:#f4f8fc;
+}
+
+
+.badge{
+
+    display:inline-block;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:900;
+}
+
+
+.badge-pass{
+
+    color:#067647;
+
+    background:#dcfae6;
+}
+
+
+.badge-fail{
+
+    color:#b42318;
+
+    background:#fee4e2;
+}
+
+
+.empty{
+
+    padding:45px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+}
+
+
+.loading{
+
+    padding:40px;
+
+    text-align:center;
+
+    color:var(--blue);
+
+    font-weight:800;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.footer{
+
+    margin-top:30px;
+
+    padding:22px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media(max-width:800px){
+
+    .header{
+
+        padding:12px 14px;
+    }
+
+    .logo{
+
+        width:42px;
+
+        height:42px;
+    }
+
+    .header h1{
+
+        font-size:15px;
+    }
+
+    .header small{
+
+        font-size:10px;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .filters{
+
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-title h2{
+
+        font-size:23px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:9px;
+    }
+
+    .stat{
+
+        padding:14px;
+    }
+
+    .stat-value{
+
+        font-size:24px;
+    }
+
+    .login-card{
+
+        margin:35px auto;
+
+        padding:25px 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<div class="header">
+
+    <div class="brand">
+
+        <img
+            src="logo.png"
+            class="logo"
+            alt="Namami Digital Skills Academy"
+        >
+
+        <div>
+
+            <h1>
+                NAMAMI DIGITAL SKILLS ACADEMY
+            </h1>
+
+            <small>
+                Teacher Result Management Panel
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     LOGIN SCREEN
+     ===================================================== -->
+
+<div
+    id="loginScreen"
+    class="container">
+
+    <div class="login-card">
+
+        <img
+            src="logo.png"
+            class="login-logo"
+            alt="Namami Logo"
+        >
+
+        <h2>
+            👨‍🏫 Teacher Login
+        </h2>
+
+        <p>
+            Result Management Panel
+            <br>
+            केवल Teacher के लिए
+        </p>
+
+
+        <label>
+            Teacher Email
+        </label>
+
+        <input
+            id="email"
+            type="email"
+            placeholder="Enter teacher email"
+        >
+
+
+        <label>
+            Password
+        </label>
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Enter password"
+        >
+
+
+        <button
+            class="primary"
+            onclick="login()"
+        >
+
+            🔐 LOGIN
+
+        </button>
+
+
+        <div
+            id="loginError"
+            class="error hidden">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     DASHBOARD
+     ===================================================== -->
+
+<div
+    id="dashboard"
+    class="container hidden">
+
+
+    <div class="dashboard-title">
+
+        <div>
+
+            <h2>
+                📊 Teacher Result Dashboard
+            </h2>
+
+            <p>
+                Excel Crash Course Online Examination Results
+            </p>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="refresh"
+                onclick="loadResults()"
+            >
+
+                🔄 Refresh
+
+            </button>
+
+
+            <button
+                class="csv"
+                onclick="downloadCSV()"
+            >
+
+                📥 Download CSV
+
+            </button>
+
+
+            <button
+                class="logout"
+                onclick="logout()"
+            >
+
+                🚪 Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         STATS
+         ================================================= -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                TOTAL ATTEMPTS
+            </div>
+
+            <div
+                id="totalCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat pass">
+
+            <div class="stat-title">
+                PASS
+            </div>
+
+            <div
+                id="passCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat fail">
+
+            <div class="stat-title">
+                FAIL
+            </div>
+
+            <div
+                id="failCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat average">
+
+            <div class="stat-title">
+                AVERAGE %
+            </div>
+
+            <div
+                id="averagePercent"
+                class="stat-value">
+                0%
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         FILTERS
+         ================================================= -->
+
+    <div class="filters">
+
+        <input
+            id="searchBox"
+            type="text"
+            placeholder="🔎 Search Student Name / Student ID / Exam..."
+            oninput="applyFilters()"
+        >
+
+
+        <select
+            id="resultFilter"
+            onchange="applyFilters()"
+        >
+
+            <option value="ALL">
+                All Results
+            </option>
+
+            <option value="PASS">
+                PASS
+            </option>
+
+            <option value="FAIL">
+                FAIL
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================================
+         RESULTS TABLE
+         ================================================= -->
+
+    <div class="table-card">
+
+        <div class="table-head">
+
+            📋 Student Examination Results
+
+        </div>
+
+
+        <div
+            id="tableArea"
+            class="loading">
+
+            Loading Results...
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<div class="footer">
+
+    <b>
+        NAMAMI DIGITAL SKILLS ACADEMY
+    </b>
+
+    <br>
+
+    Sohagpur | Practical Computer Training
+
+    <br>
+
+    Teacher Result Management System
+
+</div>
+
+
+<!-- =====================================================
+     SUPABASE
+     ===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+<script src="config.js">
+</script>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE INITIALIZATION
+   ===================================================== */
+
+let supabaseClient = null;
+
+let allResults = [];
+
+let filteredResults = [];
+
+
+try{
+
+    if(
+        window.supabase &&
+        window.SUPABASE_URL &&
+        window.SUPABASE_PUBLISHABLE_KEY
+    ){
+
+        supabaseClient =
+            window.supabase.createClient(
+                window.SUPABASE_URL,
+                window.SUPABASE_PUBLISHABLE_KEY
+            );
+
+    }
+
+}
+catch(error){
+
+    console.error(error);
+
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+async function login(){
+
+    const email =
+        document
+        .getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    const errorBox =
+        document
+        .getElementById("loginError");
+
+
+    errorBox.classList.add("hidden");
+
+
+    if(!email || !password){
+
+        errorBox.textContent =
+            "Please enter email and password.";
+
+        errorBox.classList.remove("hidden");
+
+        return;
+
+    }
+
+
+    if(!supabaseClient){
+
+        errorBox.textContent =
+            "Supabase configuration not found.";
+
+        errorBox.classList.remove("hidden");
+
+        return;
+
+    }
+
+
+    try{
+
+        const { data, error } =
+
+            await supabaseClient
+            .auth
+            .signInWithPassword({
+
+                email:
+                    email,
+
+                password:
+                    password
+
+            });
+
+
+        if(error){
+
+            console.error(error);
+
+            errorBox.textContent =
+                "Login failed. Please check your email and password.";
+
+            errorBox.classList.remove("hidden");
+
+            return;
+
+        }
+
+
+        if(data.session){
+
+            showDashboard();
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        errorBox.textContent =
+            "Something went wrong during login.";
+
+        errorBox.classList.remove("hidden");
+
+    }
+
+}
+
+
+/* =====================================================
+   SHOW DASHBOARD
+   ===================================================== */
+
+function showDashboard(){
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("dashboard")
+        .classList
+        .remove("hidden");
+
+
+    loadResults();
+
+}
+
+
+/* =====================================================
+   CHECK EXISTING LOGIN
+   ===================================================== */
+
+async function checkLogin(){
+
+    if(!supabaseClient)
+        return;
+
+
+    const {
+        data
+    } =
+        await supabaseClient
+        .auth
+        .getSession();
+
+
+    if(data.session){
+
+        showDashboard();
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD RESULTS
+   ===================================================== */
+
+async function loadResults(){
+
+    const tableArea =
+        document
+        .getElementById("tableArea");
+
+
+    tableArea.innerHTML =
+        '<div class="loading">🔄 Loading Results...</div>';
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+
+            await supabaseClient
+
+            .from("exam_results")
+
+            .select("*")
+
+            .order(
+                "submitted_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(error);
+
+            tableArea.innerHTML =
+
+                `
+                <div class="empty">
+
+                    ⚠️ Unable to load results.
+
+                    <br><br>
+
+                    ${escapeHTML(error.message)}
+
+                </div>
+                `;
+
+            return;
+
+        }
+
+
+        allResults =
+            data || [];
+
+
+        filteredResults =
+            [...allResults];
+
+
+        updateStats(
+            allResults
+        );
+
+
+        renderTable(
+            filteredResults
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        tableArea.innerHTML =
+
+            `
+            <div class="empty">
+
+                ⚠️ Something went wrong.
+
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =====================================================
+   STATS
+   ===================================================== */
+
+function updateStats(data){
+
+    const total =
+        data.length;
+
+
+    const pass =
+        data.filter(
+            r =>
+            String(r.result)
+            .toUpperCase()
+            ===
+            "PASS"
+        ).length;
+
+
+    const fail =
+        data.filter(
+            r =>
+            String(r.result)
+            .toUpperCase()
+            ===
+            "FAIL"
+        ).length;
+
+
+    const average =
+
+        total
+
+        ?
+
+        data.reduce(
+            (
+                sum,
+                r
+            ) =>
+                sum +
+                Number(
+                    r.percentage || 0
+                ),
+            0
+        )
+        /
+        total
+
+        :
+
+        0;
+
+
+    document
+        .getElementById("totalCount")
+        .textContent =
+        total;
+
+
+    document
+        .getElementById("passCount")
+        .textContent =
+        pass;
+
+
+    document
+        .getElementById("failCount")
+        .textContent =
+        fail;
+
+
+    document
+        .getElementById("averagePercent")
+        .textContent =
+        average.toFixed(2)
+        +
+        "%";
+
+}
+
+
+/* =====================================================
+   FILTER
+   ===================================================== */
+
+function applyFilters(){
+
+    const search =
+
+        document
+        .getElementById("searchBox")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const resultFilter =
+
+        document
+        .getElementById("resultFilter")
+        .value;
+
+
+    filteredResults =
+
+        allResults.filter(
+            r => {
+
+                const text =
+
+                    (
+                        r.student_name
+                        +
+                        " "
+                        +
+                        r.student_id
+                        +
+                        " "
+                        +
+                        r.exam_name
+                    )
+                    .toLowerCase();
+
+
+                const matchesSearch =
+
+                    !search
+                    ||
+                    text.includes(search);
+
+
+                const matchesResult =
+
+                    resultFilter === "ALL"
+                    ||
+                    String(r.result)
+                    .toUpperCase()
+                    ===
+                    resultFilter;
+
+
+                return
+                    matchesSearch
+                    &&
+                    matchesResult;
+
+            }
+        );
+
+
+    renderTable(
+        filteredResults
+    );
+
+}
+
+
+/* =====================================================
+   RENDER TABLE
+   ===================================================== */
+
+function renderTable(data){
+
+    const tableArea =
+        document
+        .getElementById("tableArea");
+
+
+    if(!data.length){
+
+        tableArea.innerHTML =
+
+            `
+            <div class="empty">
+
+                📭 No examination results found.
+
+                <br>
+
+                अभी कोई result उपलब्ध नहीं है।
+
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    let html =
+
+        `
+        <div class="table-wrap">
+
+        <table>
+
+        <thead>
+
+        <tr>
+
+            <th>#</th>
+
+            <th>Student Name</th>
+
+            <th>Student ID</th>
+
+            <th>Exam</th>
+
+            <th>Total</th>
+
+            <th>Correct</th>
+
+            <th>Wrong</th>
+
+            <th>Unanswered</th>
+
+            <th>Percentage</th>
+
+            <th>Result</th>
+
+            <th>Duration</th>
+
+            <th>Submitted At</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+        `;
+
+
+    data.forEach(
+        (r,index)=>{
+
+            const result =
+
+                String(
+                    r.result || ""
+                )
+                .toUpperCase();
+
+
+            const badge =
+
+                result === "PASS"
+
+                ?
+
+                `<span class="badge badge-pass">
+                    ✅ PASS
+                 </span>`
+
+                :
+
+                `<span class="badge badge-fail">
+                    ❌ FAIL
+                 </span>`;
+
+
+            html +=
+
+                `
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        <b>
+                            ${escapeHTML(
+                                r.student_name
+                                || "-"
+                            )}
+                        </b>
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            r.student_id
+                            || "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            r.exam_name
+                            || "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${r.total_questions ?? "-"}
+                    </td>
+
+                    <td>
+                        ${r.correct_answers ?? "-"}
+                    </td>
+
+                    <td>
+                        ${r.wrong_answers ?? "-"}
+                    </td>
+
+                    <td>
+                        ${r.unanswered ?? "-"}
+                    </td>
+
+                    <td>
+                        <b>
+                            ${Number(
+                                r.percentage || 0
+                            ).toFixed(2)}%
+                        </b>
+                    </td>
+
+                    <td>
+                        ${badge}
+                    </td>
+
+                    <td>
+                        ${formatDuration(
+                            r.duration_seconds
+                        )}
+                    </td>
+
+                    <td>
+                        ${formatDate(
+                            r.submitted_at
+                        )}
+                    </td>
+
+                </tr>
+                `;
+
+        }
+    );
+
+
+    html +=
+
+        `
+        </tbody>
+
+        </table>
+
+        </div>
+        `;
+
+
+    tableArea.innerHTML =
+        html;
+
+}
+
+
+/* =====================================================
+   FORMAT DURATION
+   ===================================================== */
+
+function formatDuration(seconds){
+
+    if(
+        seconds === null
+        ||
+        seconds === undefined
+    ){
+
+        return "-";
+
+    }
+
+
+    seconds =
+        Number(seconds);
+
+
+    const min =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    const sec =
+        seconds % 60;
+
+
+    return
+        String(min).padStart(2,"0")
+        +
+        ":"
+        +
+        String(sec).padStart(2,"0");
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+   ===================================================== */
+
+function formatDate(date){
+
+    if(!date)
+        return "-";
+
+
+    try{
+
+        return new Date(date)
+            .toLocaleString(
+                "en-IN",
+                {
+                    dateStyle:"medium",
+                    timeStyle:"short"
+                }
+            );
+
+    }
+
+    catch(error){
+
+        return "-";
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+   ===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   CSV DOWNLOAD
+   ===================================================== */
+
+function csvEscape(value){
+
+    return '"' +
+        String(
+            value ?? ""
+        )
+        .replace(
+            /"/g,
+            '""'
+        )
+        +
+        '"';
+
+}
+
+
+function downloadCSV(){
+
+    if(!filteredResults.length){
+
+        alert(
+            "No results available for download."
+        );
+
+        return;
+
+    }
+
+
+    const headers = [
+
+        "Student Name",
+        "Student ID",
+        "Exam",
+        "Total Questions",
+        "Correct Answers",
+        "Wrong Answers",
+        "Unanswered",
+        "Percentage",
+        "Result",
+        "Duration Seconds",
+        "Submitted At"
+
+    ];
+
+
+    const rows =
+        filteredResults.map(
+            r => [
+
+                r.student_name,
+
+                r.student_id,
+
+                r.exam_name,
+
+                r.total_questions,
+
+                r.correct_answers,
+
+                r.wrong_answers,
+
+                r.unanswered,
+
+                r.percentage,
+
+                r.result,
+
+                r.duration_seconds,
+
+                r.submitted_at
+
+            ]
+        );
+
+
+    let csv =
+
+        headers
+        .map(csvEscape)
+        .join(",")
+        +
+        "\n";
+
+
+    rows.forEach(
+        row => {
+
+            csv +=
+
+                row
+                .map(csvEscape)
+                .join(",")
+                +
+                "\n";
+
+        }
+    );
+
+
+    const blob =
+
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href =
+        url;
+
+
+    a.download =
+        "Namami_Exam_Results.csv";
+
+
+    document.body.appendChild(a);
+
+
+    a.click();
+
+
+    document.body.removeChild(a);
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+async function logout(){
+
+    if(supabaseClient){
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+    }
+
+
+    document
+        .getElementById("dashboard")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("password")
+        .value = "";
+
+}
+
+
+/* =====================================================
+   ENTER KEY LOGIN
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "Enter"
+            &&
+            !document
+                .getElementById("loginScreen")
+                .classList
+                .contains("hidden")
+        ){
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+checkLogin();
+
+</script>
+
+
+</body>
+
+</html>
