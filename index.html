@@ -1321,6 +1321,341 @@ button:active{
 
 
 /* =========================================================
+   ANSWER REVIEW
+   ========================================================= */
+
+.reviewWrap{
+
+    margin-top:30px;
+
+    text-align:left;
+}
+
+
+.reviewHeading{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:14px;
+}
+
+
+.reviewHeading h3{
+
+    margin:0;
+
+    color:var(--navy);
+
+    font-size:20px;
+}
+
+
+.reviewFilters{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+
+.rfbtn{
+
+    padding:8px 14px;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    color:#334155;
+
+    background:#eef3f9;
+
+    border:
+        1px solid
+        #d9e2ec;
+
+    border-radius:20px;
+}
+
+
+.rfbtn.active{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--blue2)
+        );
+
+    border-color:
+        var(--blue);
+}
+
+
+.reviewSummaryRow{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:16px;
+}
+
+
+.rsChip{
+
+    flex:1;
+
+    min-width:120px;
+
+    padding:12px;
+
+    text-align:center;
+
+    border-radius:14px;
+
+    font-weight:800;
+
+    font-size:13px;
+
+    color:#fff;
+}
+
+
+.rsChip.total{
+    background:linear-gradient(135deg,var(--blue),var(--blue2));
+}
+
+.rsChip.correctChip{
+    background:linear-gradient(135deg,var(--green),var(--green2));
+}
+
+.rsChip.wrongChip{
+    background:linear-gradient(135deg,var(--red),var(--red2));
+}
+
+.rsChip.skipChip{
+    background:linear-gradient(135deg,var(--orange),#b45309);
+}
+
+
+.rsChip b{
+
+    display:block;
+
+    font-size:20px;
+
+    margin-top:3px;
+}
+
+
+.reviewItem{
+
+    margin:10px 0;
+
+    background:#fff;
+
+    border:
+        1.5px solid
+        var(--border);
+
+    border-radius:14px;
+
+    overflow:hidden;
+}
+
+
+.reviewItem[data-status="correct"]{
+
+    border-left:
+        5px solid
+        var(--green);
+}
+
+
+.reviewItem[data-status="wrong"]{
+
+    border-left:
+        5px solid
+        var(--red);
+}
+
+
+.reviewItem[data-status="skip"]{
+
+    border-left:
+        5px solid
+        var(--orange);
+}
+
+
+.reviewItem summary{
+
+    cursor:pointer;
+
+    list-style:none;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:13px 16px;
+
+    font-weight:700;
+
+    background:#f8fafc;
+}
+
+
+.reviewItem summary::-webkit-details-marker{
+
+    display:none;
+}
+
+
+.rBadge{
+
+    display:inline-block;
+
+    padding:3px 10px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    color:#fff;
+}
+
+
+.rBadge.correct{ background:var(--green); }
+
+.rBadge.wrong{ background:var(--red); }
+
+.rBadge.skip{ background:var(--orange); }
+
+
+.reviewBody{
+
+    padding:14px 16px 18px;
+}
+
+
+.reviewQtext{
+
+    margin-bottom:10px;
+
+    font-weight:700;
+
+    color:#0f172a;
+}
+
+
+.reviewQtext .hi{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#64748b;
+
+    font-weight:600;
+
+    font-size:.92em;
+}
+
+
+.rOpt{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 12px;
+
+    margin:6px 0;
+
+    border-radius:10px;
+
+    border:
+        1.5px solid
+        #e2e8f0;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    background:#fafcff;
+}
+
+
+.rOpt.optCorrect{
+
+    background:#eafff3;
+
+    border-color:
+        var(--green);
+
+    color:#07865e;
+}
+
+
+.rOpt.optWrongChosen{
+
+    background:#fff1f1;
+
+    border-color:
+        var(--red);
+
+    color:#b91c1c;
+}
+
+
+.rTag{
+
+    font-size:11px;
+
+    font-weight:900;
+
+    padding:2px 8px;
+
+    border-radius:10px;
+
+    margin-left:auto;
+}
+
+
+.rTag.tagCorrect{ background:var(--green); color:#fff; }
+
+.rTag.tagYourAns{ background:var(--red); color:#fff; }
+
+
+.hidden-review{
+
+    display:none !important;
+}
+
+
+/* =========================================================
    FOOTER
    ========================================================= */
 
@@ -1734,6 +2069,11 @@ button:active{
         display:block !important;
     }
 
+    .reviewItem{
+
+        break-inside:avoid;
+    }
+
 }
 
 </style>
@@ -2096,6 +2436,12 @@ button:active{
     </p>
 
 
+    <div
+        id="reviewWrap"
+        class="reviewWrap">
+    </div>
+
+
     <button
         class="primary"
         onclick="window.print()"
@@ -2196,6 +2542,10 @@ catch(error){
 
 /* =====================================================
    QUESTIONS
+   (Data unchanged. In every question array, the option
+   at index 2 is always the correct answer — the display
+   order of A/B/C/D is shuffled per question at runtime,
+   not the underlying data.)
    ===================================================== */
 
 const questions = [
@@ -2902,6 +3252,14 @@ let answers =
     Array(questions.length)
     .fill(null);
 
+/* optionOrder[i] = the shuffled display order (as original
+   indices 0-3, where 0 is always the data's correct
+   answer) used for question i, generated fresh each
+   attempt so the correct option lands in a different
+   A/B/C/D position every time. */
+
+let optionOrder = [];
+
 let seconds = 75 * 60;
 
 let timerInt = null;
@@ -2913,6 +3271,39 @@ let studentId = "";
 let startedAt = null;
 
 let submitted = false;
+
+
+/* =====================================================
+   SHUFFLE HELPER (Fisher-Yates)
+   ===================================================== */
+
+function shuffleArr(arr){
+
+    let a =
+        arr.slice();
+
+
+    for(
+        let i = a.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+
+        [a[i], a[j]] =
+            [a[j], a[i]];
+
+    }
+
+
+    return a;
+
+}
 
 
 /* =====================================================
@@ -2963,6 +3354,16 @@ function startExam(){
 
     startedAt =
         Date.now();
+
+
+    /* Generate a fresh random option order for every
+       question so the correct answer is not always
+       in the same position. */
+
+    optionOrder =
+        questions.map(
+            () => shuffleArr([0,1,2,3])
+        );
 
 
     buildPalette();
@@ -3187,7 +3588,15 @@ function render(){
     o.innerHTML = "";
 
 
-    for(let i=2;i<6;i++){
+    /* Display options in this question's shuffled
+       order instead of the original data order, so
+       the correct answer is not always option A. */
+
+    const order =
+        optionOrder[q];
+
+
+    order.forEach((origIdx, pos)=>{
 
         let lab =
             document
@@ -3204,21 +3613,21 @@ function render(){
         <input
             type="radio"
             name="opt"
-            value="${i-1}"
-            ${answers[q]===i-1
+            value="${origIdx}"
+            ${answers[q]===origIdx
                 ?"checked"
                 :""
             }
         >
 
         <b style="margin-right:7px;">
-            ${labels[i-2]}.
+            ${labels[pos]}.
         </b>
 
         <div class="optText">
 
             <span>
-                ${item[i]}
+                ${item[2+origIdx]}
             </span>
 
         </div>
@@ -3246,7 +3655,7 @@ function render(){
 
         o.appendChild(lab);
 
-    }
+    });
 
 
     update();
@@ -3425,6 +3834,7 @@ function confirmSubmit(){
 
 /* =====================================================
    SAVE RESULT TO SUPABASE
+   (unchanged — this is what stores the student's data)
    ===================================================== */
 
 async function saveExamResult(data){
@@ -3495,6 +3905,266 @@ async function saveExamResult(data){
 
 
 /* =====================================================
+   BUILD ANSWER REVIEW (new)
+   Shows every question with the student's answer vs
+   the correct answer, in the same shuffled order the
+   student actually saw, so students can clearly see
+   what they got right/wrong.
+   ===================================================== */
+
+function generateReview(){
+
+    const wrap =
+        document.getElementById("reviewWrap");
+
+
+    if(!wrap)
+        return;
+
+
+    const labels =
+        ["A","B","C","D"];
+
+
+    let correctCount = 0;
+
+    let wrongCount = 0;
+
+    let skipCount = 0;
+
+
+    let itemsHtml = "";
+
+
+    questions.forEach((item,i)=>{
+
+        const order =
+            optionOrder[i];
+
+
+        const a =
+            answers[i];
+
+
+        let status = "skip";
+
+
+        if(a !== null){
+
+            status =
+                (a === 0)
+                ?
+                "correct"
+                :
+                "wrong";
+
+        }
+
+
+        if(status === "correct")
+            correctCount++;
+
+        else if(status === "wrong")
+            wrongCount++;
+
+        else
+            skipCount++;
+
+
+        const badgeText =
+
+            status === "correct"
+            ?
+            "✔ Correct"
+            :
+            status === "wrong"
+            ?
+            "✘ Wrong"
+            :
+            "— Skipped";
+
+
+        let optsHtml = "";
+
+
+        order.forEach((origIdx,pos)=>{
+
+            let cls = "rOpt";
+
+            let tag = "";
+
+
+            if(origIdx === 0){
+
+                cls += " optCorrect";
+
+                tag =
+                    `<span class="rTag tagCorrect">Correct / सही</span>`;
+
+            }
+            else if(a === origIdx){
+
+                cls += " optWrongChosen";
+
+                tag =
+                    `<span class="rTag tagYourAns">Your Answer / आपका उत्तर</span>`;
+
+            }
+
+
+            optsHtml +=
+
+                `
+                <div class="${cls}">
+                    <b>${labels[pos]}.</b>
+                    <span>${item[2+origIdx]}</span>
+                    ${tag}
+                </div>
+                `;
+
+        });
+
+
+        itemsHtml +=
+
+            `
+            <details class="reviewItem" data-status="${status}">
+
+                <summary>
+                    <span>Q${i+1}.</span>
+                    <span class="rBadge ${status}">${badgeText}</span>
+                </summary>
+
+                <div class="reviewBody">
+
+                    <div class="reviewQtext">
+
+                        <span class="en">${item[0]}</span>
+
+                        <span class="hi">${item[1]}</span>
+
+                    </div>
+
+                    ${optsHtml}
+
+                </div>
+
+            </details>
+            `;
+
+    });
+
+
+    const summaryHtml =
+
+        `
+        <div class="reviewSummaryRow">
+
+            <div class="rsChip total">
+                Total / कुल
+                <b>${questions.length}</b>
+            </div>
+
+            <div class="rsChip correctChip">
+                Correct / सही
+                <b>${correctCount}</b>
+            </div>
+
+            <div class="rsChip wrongChip">
+                Wrong / गलत
+                <b>${wrongCount}</b>
+            </div>
+
+            <div class="rsChip skipChip">
+                Skipped / अनुत्तरित
+                <b>${skipCount}</b>
+            </div>
+
+        </div>
+        `;
+
+
+    const filterHtml =
+
+        `
+        <div class="reviewHeading">
+
+            <h3>📋 Answer Review / उत्तर समीक्षा</h3>
+
+            <div class="reviewFilters">
+
+                <button type="button" class="rfbtn active" data-filter="all">All / सभी</button>
+
+                <button type="button" class="rfbtn" data-filter="wrong">Wrong / गलत</button>
+
+                <button type="button" class="rfbtn" data-filter="skip">Skipped / अनुत्तरित</button>
+
+                <button type="button" class="rfbtn" data-filter="correct">Correct / सही</button>
+
+            </div>
+
+        </div>
+        `;
+
+
+    wrap.innerHTML =
+
+        filterHtml
+        +
+        summaryHtml
+        +
+        `<div id="reviewItemsBox">${itemsHtml}</div>`;
+
+
+    wrap
+        .querySelectorAll(".rfbtn")
+        .forEach(btn=>{
+
+            btn.onclick = ()=>{
+
+                wrap
+                    .querySelectorAll(".rfbtn")
+                    .forEach(b=>
+                        b.classList.remove("active")
+                    );
+
+
+                btn.classList.add("active");
+
+
+                const f =
+                    btn.dataset.filter;
+
+
+                wrap
+                    .querySelectorAll(".reviewItem")
+                    .forEach(el=>{
+
+                        if(
+                            f === "all"
+                            ||
+                            el.dataset.status === f
+                        ){
+
+                            el.classList.remove("hidden-review");
+
+                        }
+                        else{
+
+                            el.classList.add("hidden-review");
+
+                        }
+
+                    });
+
+            };
+
+        });
+
+}
+
+
+/* =====================================================
    SUBMIT EXAM
    ===================================================== */
 
@@ -3518,15 +4188,18 @@ async function submitExam(auto=false){
     answers.forEach(
         (a,i)=>{
 
+            /* origIdx 0 is always the data's correct
+               answer (item[2]) regardless of the
+               shuffled display position, so this check
+               still reflects the true correct answer. */
+
             if(
 
                 a !== null
 
                 &&
 
-                questions[i][a + 1]
-                ===
-                questions[i][2]
+                a === 0
 
             ){
 
@@ -3741,6 +4414,12 @@ async function submitExam(auto=false){
         `;
 
 
+    /* Build the full question-by-question review so
+       students can see exactly what was right/wrong. */
+
+    generateReview();
+
+
     /* =========================================
        AUTO SUBMIT MESSAGE
        ========================================= */
@@ -3800,6 +4479,8 @@ async function submitExam(auto=false){
 
     /* =========================================
        SAVE RESULT
+       (unchanged payload — data your teacher needs
+       for the exam_results table)
        ========================================= */
 
     const saved =
