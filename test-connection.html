@@ -149,6 +149,14 @@ async function runTests(){
     }
 
     // ---------- STEP 3: test insert ----------
+    function genUUID(){
+        if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+        });
+    }
+
     const testRow = {
         exam_name: "CONNECTION_TEST - safe to delete",
         student_name: "Test Student",
@@ -160,7 +168,7 @@ async function runTests(){
         percentage: 53.33,
         result: "PASS",
         duration_seconds: 100,
-        client_exam_id: "test-" + Date.now()
+        client_exam_id: genUUID()
     };
 
     try{
