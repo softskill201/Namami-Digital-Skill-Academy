@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namami Academy - Supabase Connection Test</title>
+<style>
+    body{
+        font-family:"Segoe UI",Arial,sans-serif;
+        background:#f4f8fc;
+        color:#172033;
+        max-width:800px;
+        margin:30px auto;
+        padding:0 16px;
+    }
+    h1{
+        color:#0c3b70;
+        font-size:22px;
+    }
+    .step{
+        background:#fff;
+        border:1px solid #dbe5f0;
+        border-radius:12px;
+        padding:16px;
+        margin:12px 0;
+    }
+    .step h3{
+        margin:0 0 8px;
+        font-size:15px;
+    }
+    .pending{ border-left:5px solid #94a3b8; }
+    .ok{ border-left:5px solid #10b981; }
+    .fail{ border-left:5px solid #ef4444; }
+    .msg{
+        font-size:14px;
+        white-space:pre-wrap;
+        word-break:break-word;
+    }
+    .ok .msg{ color:#07865e; }
+    .fail .msg{ color:#b91c1c; font-weight:600; }
+    pre{
+        background:#0c1b30;
+        color:#c8e6ff;
+        padding:12px;
+        border-radius:8px;
+        overflow:auto;
+        font-size:12px;
+    }
+    .hint{
+        margin-top:8px;
+        padding:10px;
+        background:#fff8e6;
+        border:1px solid #f5d98a;
+        border-radius:8px;
+        font-size:13px;
+        color:#7a5b00;
+    }
+    button{
+        padding:10px 16px;
+        border:0;
+        border-radius:8px;
+        background:#1769e0;
+        color:#fff;
+        font-weight:700;
+        cursor:pointer;
+        margin-top:10px;
+    }
+</style>
+</head>
+<body>
+
+<h1>🔧 Namami Academy — Supabase Connection Test</h1>
+<p>Ye page apne aap 4 checks karta hai aur jahan bhi galti hai wahi screen par exact reason likh dega.</p>
+
+<div id="s1" class="step pending">
+    <h3>1️⃣ config.js load ho raha hai?</h3>
+    <div class="msg">Checking...</div>
+</div>
+
+<div id="s2" class="step pending">
+    <h3>2️⃣ Supabase client ban raha hai?</h3>
+    <div class="msg">Waiting...</div>
+</div>
+
+<div id="s3" class="step pending">
+    <h3>3️⃣ Student ki tarah TEST insert (anon)</h3>
+    <div class="msg">Waiting...</div>
+</div>
+
+<div id="s4" class="step pending">
+    <h3>4️⃣ Table se data SELECT (anon read check)</h3>
+    <div class="msg">Waiting...</div>
+</div>
+
+<button onclick="location.reload()">🔄 Dobara Test Karein</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<script>
+
+function setStep(id, status, message, extra){
+    const el = document.getElementById(id);
+    el.className = "step " + status;
+    let html = `<div class="msg">${message}</div>`;
+    if(extra){
+        html += `<pre>${JSON.stringify(extra, null, 2)}</pre>`;
+    }
+    el.innerHTML = el.querySelector("h3").outerHTML + html;
+}
+
+function addHint(id, text){
+    const el = document.getElementById(id);
+    const hint = document.createElement("div");
+    hint.className = "hint";
+    hint.innerHTML = "💡 " + text;
+    el.appendChild(hint);
+}
+
+async function runTests(){
+
+    // ---------- STEP 1: config.js ----------
+    if(typeof window.SUPABASE_URL === "undefined" || typeof window.SUPABASE_PUBLISHABLE_KEY === "undefined"){
+        setStep("s1","fail","❌ config.js load nahi hua, ya SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY define nahi hai.");
+        addHint("s1","Check karein ki config.js isi folder me hai jis folder me ye test-connection.html hai, aur is page ko double-click se nahi balki apni actual website URL (http:// ya https://) se open kar rahe hain, file:// se nahi.");
+        return;
+    }
+
+    if(!window.SUPABASE_URL.startsWith("https://") || !window.SUPABASE_URL.includes(".supabase.co")){
+        setStep("s1","fail","⚠️ SUPABASE_URL sahi format me nahi lag raha: " + window.SUPABASE_URL);
+        addHint("s1","URL kuch aisa hona chahiye: https://xxxxxxxx.supabase.co (bina trailing slash ke).");
+        return;
+    }
+
+    setStep("s1","ok","✅ config.js load ho gaya.\nURL: " + window.SUPABASE_URL + "\nKey (first 20 chars): " + window.SUPABASE_PUBLISHABLE_KEY.slice(0,20) + "...");
+
+    // ---------- STEP 2: create client ----------
+    let supabaseClient;
+    try{
+        if(!window.supabase){
+            setStep("s2","fail","❌ supabase-js library load nahi hui (CDN block ho sakta hai).");
+            return;
+        }
+        supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
+        setStep("s2","ok","✅ Supabase client successfully ban gaya.");
+    }catch(err){
+        setStep("s2","fail","❌ Client banane me error: " + err.message, err);
+        return;
+    }
+
+    // ---------- STEP 3: test insert ----------
+    const testRow = {
+        exam_name: "CONNECTION_TEST - safe to delete",
+        student_name: "Test Student",
+        student_id: "TEST-" + Date.now(),
+        total_questions: 75,
+        correct_answers: 40,
+        wrong_answers: 30,
+        unanswered: 5,
+        percentage: 53.33,
+        result: "PASS",
+        duration_seconds: 100,
+        client_exam_id: "test-" + Date.now()
+    };
+
+    try{
+        const { data, error } = await supabaseClient.from("exam_results").insert(testRow).select();
+
+        if(error){
+            setStep("s3","fail","❌ Insert FAIL hua. Ye asli wajah hai jo student ka data save nahi ho raha.\n\nError code: " + (error.code || "N/A") + "\nMessage: " + error.message, error);
+
+            if(error.code === "42501" || (error.message||"").toLowerCase().includes("row-level security")){
+                addHint("s3","Ye Row Level Security (RLS) ka error hai. Supabase SQL Editor me jaake pehle diya gaya fix wala SQL script dobara run karein — khaaskar 'Allow public insert of exam results' wali policy. Ho sakta hai wo policy pehle run nahi hui ho ya kisi galti se ban nahi payi.");
+            }
+            else if(error.code === "42703" || (error.message||"").toLowerCase().includes("column")){
+                addHint("s3","Ye batata hai ki table me koi column missing hai jo code use kar raha hai (jaise exam_name, student_name, etc). SQL Editor me 'alter table' wali lines dobara run karein taaki sab columns ban jaayen.");
+            }
+            else if(error.code === "42P01" || (error.message||"").toLowerCase().includes("does not exist") && (error.message||"").toLowerCase().includes("relation")){
+                addHint("s3","Ye batata hai ki 'exam_results' naam ki table hi maujood nahi hai. SQL Editor me 'create table' wali line run karein.");
+            }
+            else if((error.message||"").toLowerCase().includes("invalid api key") || (error.message||"").toLowerCase().includes("jwt")){
+                addHint("s3","Aapki SUPABASE_PUBLISHABLE_KEY galat ya expire ho sakti hai. Supabase Dashboard -> Project Settings -> API Keys me jaake sahi 'Publishable key' copy karke config.js me daalein.");
+            }
+            else{
+                addHint("s3","Upar diya gaya poora error message dhyan se padhein — usme exact wajah likhi hoti hai. Agar samajh na aaye to ye poora error text mujhe bhej dein.");
+            }
+        }
+        else{
+            setStep("s3","ok","✅ Test insert successful! Iska matlab hai insert ka rasta sahi hai.\nInserted row ID: " + (data && data[0] && data[0].id ? data[0].id : "(id nahi mila - id column check karein)"));
+        }
+    }catch(err){
+        setStep("s3","fail","❌ Insert karte waqt unexpected error: " + err.message, err);
+        addHint("s3","Ye normally network issue ya galat URL ki wajah se hota hai. Internet connection aur SUPABASE_URL dobara check karein.");
+    }
+
+    // ---------- STEP 4: test select ----------
+    try{
+        const { data, error } = await supabaseClient.from("exam_results").select("*").limit(1);
+
+        if(error){
+            setStep("s4","fail","❌ Select FAIL hua.\nError code: " + (error.code || "N/A") + "\nMessage: " + error.message, error);
+
+            if(error.code === "42703" || (error.message||"").toLowerCase().includes("submitted_at")){
+                addHint("s4","Agar error 'submitted_at' column ke baare me hai, to ye wahi wajah hai jiski wajah se admin.html me results load nahi ho rahe (wo submitted_at se order karta hai). SQL Editor me 'alter table ... add column if not exists submitted_at' wali line dobara run karein.");
+            }
+        }
+        else{
+            setStep("s4","ok","✅ Select bhi successfully chal raha hai. Total test rows dikhe: " + data.length);
+        }
+    }catch(err){
+        setStep("s4","fail","❌ Select karte waqt unexpected error: " + err.message, err);
+    }
+}
+
+runTests();
+
+</script>
+
+</body>
+</html>
